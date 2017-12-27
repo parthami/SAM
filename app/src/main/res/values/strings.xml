@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">mfa-fingerprint</string>
+    <string name="authTitle">Authentication</string>
+    <string name="authSubTitle">These are the three factors</string>
+    <string name="auth1">Authentication Factor 1</string>
+    <string name="auth2">Authentication Factor 2</string>
+    <string name="auth3">Authentication Factor 3</string>
+    <string name="toggleT">True</string>
+    <string name="toggleF">False</string>
 </resources>
