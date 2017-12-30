@@ -1,7 +1,8 @@
-package parth.mfa_fingerprint
+package parth.mfa_fingerprint.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import parth.mfa_fingerprint.R
 
 class MainActivity : AppCompatActivity() {
 

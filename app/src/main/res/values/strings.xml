@@ -7,4 +7,11 @@
     <string name="auth3">Authentication Factor 3</string>
     <string name="toggleT">True</string>
     <string name="toggleF">False</string>
+    <string name="setup_lock_screen">
+        Secure lock screen hasn\'t set been up.\n
+        Go to \'Settings -> Security -> Fingerprint\' to set up a fingerprint
+    </string>
+    <string name="register_fingerprint">
+        Go to \'Settings -> Security -> Fingerprint\' and register at least one fingerprint
+    </string>
 </resources>
