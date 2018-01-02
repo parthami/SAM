@@ -5,7 +5,6 @@ import android.hardware.fingerprint.FingerprintManager
 import android.os.CancellationSignal
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.widget.Toast
-import parth.mfa_fingerprint.activities.FingerprintActivity
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingeprintPresenterI
 import java.io.IOException
@@ -22,10 +21,9 @@ import javax.crypto.SecretKey
  * Created by Parth Chandratreya on 31/12/2017.
  */
 
-class FingerprintPresenter constructor(var fingerprintActvity: FingerprintActivity, var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
+class FingerprintPresenter (private var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
 
-    lateinit var fingerprintCipher: Cipher
-    val DEFAULT_KEY_NAME = "default_key"
+    private lateinit var fingerprintCipher: Cipher
 
     override fun setupCryto() {
         fingerprintInteractor.setupKeyStoreAndKeyGenerator()
@@ -38,8 +36,8 @@ class FingerprintPresenter constructor(var fingerprintActvity: FingerprintActivi
             fingerprintCipher.init(Cipher.ENCRYPT_MODE, fingerprintInteractor.keyStore.getKey(keyName, null) as SecretKey)
             return true
         } catch (e: Exception) {
-            when (e) {
-                is KeyPermanentlyInvalidatedException -> return false
+            return when (e) {
+                is KeyPermanentlyInvalidatedException -> false
                 is KeyStoreException,
                 is CertificateException,
                 is UnrecoverableKeyException,
@@ -59,16 +57,14 @@ class FingerprintPresenter constructor(var fingerprintActvity: FingerprintActivi
 
     override fun startListening(context: Context) {
         val cryptoObj: FingerprintManager.CryptoObject = FingerprintManager.CryptoObject(fingerprintCipher)
-        val fingerprintHandler: FingerprintHandler = FingerprintHandler(context, cryptoObj)
+        val fingerprintHandler = FingerprintHandler(context, cryptoObj)
         fingerprintHandler.startAuthentication()
     }
 
-    class FingerprintHandler(var context: Context, var cryptoObj: FingerprintManager.CryptoObject) : FingerprintManager.AuthenticationCallback() {
-
-        private var cancellationSignal: CancellationSignal? = null
+    class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject) : FingerprintManager.AuthenticationCallback() {
 
         fun startAuthentication() {
-            var fingerprintMgr: FingerprintManager =  context.getSystemService(FingerprintManager::class.java)
+            val fingerprintMgr: FingerprintManager =  context.getSystemService(FingerprintManager::class.java)
             fingerprintMgr.authenticate(cryptoObj, CancellationSignal(), 0, this, null)
         }
 

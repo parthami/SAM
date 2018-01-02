@@ -23,7 +23,6 @@ class FingerprintInteractor : FingerprintInteractorI {
 
     lateinit var keyStore: KeyStore
     private lateinit var keyGenerator: KeyGenerator
-    private lateinit var sharedPreferences: SharedPreferences
     private val ANDROID_KEY_STORE = "AndroidKeyStore"
 
     /**

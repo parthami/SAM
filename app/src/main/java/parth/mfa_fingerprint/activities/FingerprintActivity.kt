@@ -10,17 +10,15 @@ import parth.mfa_fingerprint.presenters.FingerprintPresenter
 
 class FingerprintActivity : AppCompatActivity(), FingerprintView {
 
-    lateinit var presenter: FingerprintPresenter
-    lateinit var interactor: FingerprintInteractor
-    var active : Boolean = true
-    var authenticationCompleted = 0
+    private lateinit var presenter: FingerprintPresenter
+    private lateinit var interactor: FingerprintInteractor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fingerprint)
         /* Create the Presenter and Interactor */
         interactor = FingerprintInteractor()
-        presenter = FingerprintPresenter(this, interactor)
+        presenter = FingerprintPresenter(interactor)
         /* Setup the listeners */
         toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {

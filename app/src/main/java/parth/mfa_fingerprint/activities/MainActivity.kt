@@ -12,7 +12,7 @@ import parth.mfa_fingerprint.interfaces.MainView
 class MainActivity : AppCompatActivity(), MainView {
 
     private val AUTHENTICATION_ONE_COMPLETED = 0
-    var auth1Completed = true
+    private var auth1Completed = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
