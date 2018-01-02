@@ -1,8 +1,13 @@
 package parth.mfa_fingerprint.interactors
 
+import android.app.KeyguardManager
+import android.content.Context
 import android.content.SharedPreferences
+import android.hardware.fingerprint.FingerprintManager
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
+import android.widget.Toast
+import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.FingerprintInteractorI
 import java.io.IOException
 import java.security.*
@@ -93,6 +98,21 @@ class FingerprintInteractor : FingerprintInteractorI {
                 is IOException -> throw RuntimeException(e)
                 else -> throw e
             }
+        }
+    }
+
+    override fun checkForFingerprints(context: Context) {
+        val keyguardManager = context.getSystemService(KeyguardManager::class.java)
+        if (!keyguardManager.isKeyguardSecure) {
+            // Show a message that the user hasn't set up a fingerprint or lock screen.
+            Toast.makeText(context, context.getString(R.string.setup_lock_screen), Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val fingerprintManager = context.getSystemService(FingerprintManager::class.java)
+        if (!fingerprintManager.hasEnrolledFingerprints()) {
+            Toast.makeText(context, context.getString(R.string.register_fingerprint), Toast.LENGTH_LONG).show()
+            return
         }
     }
 }

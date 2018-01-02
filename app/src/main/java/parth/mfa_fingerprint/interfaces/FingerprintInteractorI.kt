@@ -1,5 +1,6 @@
 package parth.mfa_fingerprint.interfaces
 
+import android.content.Context
 import javax.crypto.Cipher
 
 /**
@@ -12,4 +13,6 @@ interface FingerprintInteractorI {
     fun setupCipher(): Cipher
 
     fun createKey(keyName: String)
+
+    fun checkForFingerprints(context : Context)
 }

@@ -1,10 +1,8 @@
 package parth.mfa_fingerprint.activities
 
-import android.app.KeyguardManager
-import android.hardware.fingerprint.FingerprintManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_fingerprint.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingerprintView
@@ -12,35 +10,32 @@ import parth.mfa_fingerprint.presenters.FingerprintPresenter
 
 class FingerprintActivity : AppCompatActivity(), FingerprintView {
 
-    private lateinit var interactor: FingerprintInteractor
-    private lateinit var presenter: FingerprintPresenter
+    lateinit var presenter: FingerprintPresenter
+    lateinit var interactor: FingerprintInteractor
+    var active : Boolean = true
+    var authenticationCompleted = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fingerprint)
-
-//        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        /* Create the Presenter and Interactor */
+        interactor = FingerprintInteractor()
         presenter = FingerprintPresenter(this, interactor)
+        /* Setup the listeners */
+        toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                intent.extras?.putBoolean("active", false)
+                toggleButton.isEnabled = false
+            }
+        }
+
         presenter.setupCryto()
-        checkForFingerprints()
+        presenter.checkForFingerprints(applicationContext)
         presenter.initCipher("default_key")
-        presenter.startListening()
+        presenter.startListening(this)
     }
 
-    override fun checkForFingerprints() {
-        val keyguardManager = getSystemService(KeyguardManager::class.java)
-        if (!keyguardManager.isKeyguardSecure) {
-            // Show a message that the user hasn't set up a fingerprint or lock screen.
-            Toast.makeText(this, getString(R.string.setup_lock_screen), Toast.LENGTH_LONG).show()
-            return
-        }
-
-        val fingerprintManager = getSystemService(FingerprintManager::class.java)
-        if (!fingerprintManager.hasEnrolledFingerprints()) {
-            Toast.makeText(this, getString(R.string.register_fingerprint), Toast.LENGTH_LONG).show()
-            return
-        }
-
-        interactor.createKey("default_key")
+    override fun onCompletion() {
+        intent.extras?.putBoolean("active", false)
     }
 }
