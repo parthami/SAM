@@ -2,7 +2,6 @@ package parth.mfa_fingerprint.interactors
 
 import android.app.KeyguardManager
 import android.content.Context
-import android.content.SharedPreferences
 import android.hardware.fingerprint.FingerprintManager
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties

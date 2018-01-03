@@ -22,7 +22,7 @@ import javax.crypto.SecretKey
  * Created by Parth Chandratreya on 31/12/2017.
  */
 
-class FingerprintPresenter (var fingerprintView: FingerprintView, private var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
+class FingerprintPresenter (private var fingerprintView: FingerprintView, private var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
 
     private lateinit var fingerprintCipher: Cipher
 
