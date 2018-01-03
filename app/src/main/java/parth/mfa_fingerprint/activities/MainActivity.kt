@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         auth1Button.isEnabled = auth1Completed
     }
 
@@ -28,7 +27,9 @@ class MainActivity : AppCompatActivity(), MainView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (requestCode == AUTHENTICATION_ONE_COMPLETED && resultCode == Activity.RESULT_OK) {
-            auth1Completed = data.getBooleanExtra("active", true)
+            val b = data.getBooleanExtra("success", false)
+            auth1Button.isEnabled = b
         }
     }
+
 }

@@ -19,8 +19,9 @@
             </intent-filter>
         </activity>
         <!--Activity-->
-        <activity android:name=".activities.FingerprintActivity">
-
+        <activity
+            android:name=".activities.FingerprintActivity"
+            android:parentActivityName=".activities.MainActivity">
         </activity>
     </application>
 

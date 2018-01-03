@@ -5,5 +5,5 @@ package parth.mfa_fingerprint.interfaces
  */
 interface FingerprintView {
 
-    fun onCompletion()
+    fun onSuccess()
 }

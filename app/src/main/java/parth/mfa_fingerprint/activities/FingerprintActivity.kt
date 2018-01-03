@@ -1,12 +1,15 @@
 package parth.mfa_fingerprint.activities
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_fingerprint.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingerprintView
 import parth.mfa_fingerprint.presenters.FingerprintPresenter
+
+
 
 class FingerprintActivity : AppCompatActivity(), FingerprintView {
 
@@ -18,14 +21,7 @@ class FingerprintActivity : AppCompatActivity(), FingerprintView {
         setContentView(R.layout.activity_fingerprint)
         /* Create the Presenter and Interactor */
         interactor = FingerprintInteractor()
-        presenter = FingerprintPresenter(interactor)
-        /* Setup the listeners */
-        toggleButton.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                intent.extras?.putBoolean("active", false)
-                toggleButton.isEnabled = false
-            }
-        }
+        presenter = FingerprintPresenter(this, interactor)
 
         presenter.setupCryto()
         presenter.checkForFingerprints(applicationContext)
@@ -33,7 +29,10 @@ class FingerprintActivity : AppCompatActivity(), FingerprintView {
         presenter.startListening(this)
     }
 
-    override fun onCompletion() {
-        intent.extras?.putBoolean("active", false)
+    override fun onSuccess() {
+        val intent = Intent()
+        intent.putExtra("auth", true)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 }

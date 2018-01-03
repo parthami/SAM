@@ -7,6 +7,7 @@ import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.widget.Toast
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingeprintPresenterI
+import parth.mfa_fingerprint.interfaces.FingerprintView
 import java.io.IOException
 import java.security.InvalidKeyException
 import java.security.KeyStoreException
@@ -21,7 +22,7 @@ import javax.crypto.SecretKey
  * Created by Parth Chandratreya on 31/12/2017.
  */
 
-class FingerprintPresenter (private var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
+class FingerprintPresenter (var fingerprintView: FingerprintView, private var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
 
     private lateinit var fingerprintCipher: Cipher
 
@@ -57,11 +58,11 @@ class FingerprintPresenter (private var fingerprintInteractor: FingerprintIntera
 
     override fun startListening(context: Context) {
         val cryptoObj: FingerprintManager.CryptoObject = FingerprintManager.CryptoObject(fingerprintCipher)
-        val fingerprintHandler = FingerprintHandler(context, cryptoObj)
+        val fingerprintHandler = FingerprintHandler(context, cryptoObj, fingerprintView)
         fingerprintHandler.startAuthentication()
     }
 
-    class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject) : FingerprintManager.AuthenticationCallback() {
+    class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject, private var fingerprintView: FingerprintView) : FingerprintManager.AuthenticationCallback() {
 
         fun startAuthentication() {
             val fingerprintMgr: FingerprintManager =  context.getSystemService(FingerprintManager::class.java)
@@ -82,6 +83,7 @@ class FingerprintPresenter (private var fingerprintInteractor: FingerprintIntera
 
         override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult) {
             Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
+            fingerprintView.onSuccess()
         }
     }
 
