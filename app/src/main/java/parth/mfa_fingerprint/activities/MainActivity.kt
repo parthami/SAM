@@ -3,13 +3,12 @@ package parth.mfa_fingerprint.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.MainView
 
-class MainActivity : AppCompatActivity(), MainView {
+class MainActivity : Activity(), MainView {
 
     private val AUTHENTICATION_ONE_COMPLETED = 0
     private var auth1Completed = true
