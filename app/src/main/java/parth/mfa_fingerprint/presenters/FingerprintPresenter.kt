@@ -8,12 +8,14 @@ import android.widget.Toast
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingeprintPresenterI
 import parth.mfa_fingerprint.interfaces.FingerprintView
+import parth.mfa_fingerprint.types.AuthenticationNode
 import java.io.IOException
 import java.security.InvalidKeyException
 import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.UnrecoverableKeyException
 import java.security.cert.CertificateException
+import java.time.LocalDateTime
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 
@@ -64,6 +66,9 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
 
     class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject, private var fingerprintView: FingerprintView) : FingerprintManager.AuthenticationCallback() {
 
+        private var node = AuthenticationNode.FINGERPRINT
+        private var datetime = LocalDateTime.now()
+
         fun startAuthentication() {
             val fingerprintMgr: FingerprintManager =  context.getSystemService(FingerprintManager::class.java)
             fingerprintMgr.authenticate(cryptoObj, CancellationSignal(), 0, this, null)
@@ -83,6 +88,7 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
 
         override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult) {
             Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
+//            var log = AuthenticationNodeLog(0, node.label, true)
             fingerprintView.onSuccess()
         }
     }

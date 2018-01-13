@@ -6,24 +6,29 @@
 
     <application
         android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:fullBackupContent="@xml/backup_descriptor">
-        <!--Activity-->
+        android:theme="@style/AppTheme">
+
+        <!-- Activity -->
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--Activity-->
+        <!-- Activity -->
         <activity
             android:name=".activities.FingerprintActivity"
-            android:parentActivityName=".activities.MainActivity">
-        </activity>
+            android:parentActivityName=".activities.MainActivity" />
+        <!--Acticity-->
+        <activity
+            android:name=".activities.AuthenticationLogActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
