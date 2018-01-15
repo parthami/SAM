@@ -21,11 +21,11 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/factorOneText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="64dp"
         android:text="@string/auth1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -38,7 +38,7 @@
         android:layout_marginTop="144dp"
         android:text="@string/auth2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/factorOneText" />
 
     <TextView
         android:id="@+id/textView3"
@@ -58,9 +58,12 @@
         android:layout_marginEnd="16dp"
         android:height="36dp"
         android:elevation="2dp"
+        android:gravity="center_vertical|center_horizontal"
         android:onClick="auth1Click"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:text="@string/toggleF"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
+        app:layout_constraintBaseline_toBaselineOf="@+id/factorOneText"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
@@ -70,8 +73,11 @@
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:elevation="2dp"
+        android:gravity="center"
+        android:onClick="logView"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:text="@string/toggleF"
-        android:onClick="logview"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent" />
 

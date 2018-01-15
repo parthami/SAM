@@ -28,9 +28,9 @@ class FingerprintActivity : Activity(), FingerprintView {
         presenter.startListening(this)
     }
 
-    override fun onSuccess() {
+    override fun onResult(boolean: Boolean) {
         val intent = Intent()
-        intent.putExtra("auth", true)
+        intent.putExtra("result", boolean)
         setResult(Activity.RESULT_OK, intent)
         finish()
     }

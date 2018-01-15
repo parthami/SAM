@@ -12,13 +12,13 @@ import parth.mfa_fingerprint.types.AuthenticationNode
 class MainActivity : Activity(), MainView {
 
     private val AUTHENTICATION_ONE_COMPLETED = 0
-    private var auth1Completed = true
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        auth1Button.isEnabled = auth1Completed
-        var fingerprint = AuthenticationNode.FINGERPRINT
+        // Set text for factors
+        val fingerprint = AuthenticationNode.FINGERPRINT
+        factorOneText.text = fingerprint.label
     }
 
     override fun auth1Click(view: View) {
@@ -26,15 +26,17 @@ class MainActivity : Activity(), MainView {
         startActivityForResult(intent, AUTHENTICATION_ONE_COMPLETED)
     }
 
-    fun logview(view: View) {
+    fun logView(view: View) {
         val intent = Intent(this, AuthenticationLogActivity::class.java)
         startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (requestCode == AUTHENTICATION_ONE_COMPLETED && resultCode == Activity.RESULT_OK) {
-            val b = data.getBooleanExtra("success", false)
-            auth1Button.isEnabled = b
+            // Retrieve Authentication result
+            val b = data.getBooleanExtra("result", false)
+            //  Set the button based on the result
+            auth1Button.isEnabled = !b
         }
     }
 
