@@ -1,7 +1,6 @@
 package parth.mfa_fingerprint.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import parth.mfa_fingerprint.types.AuthenticationNodeLog
 /**
  * Created by Parth Chandratreya on 13/01/2018.
  */
-class LogAdapter (var context: Context, var logs: List<AuthenticationNodeLog>): RecyclerView.Adapter<LogAdapter.ViewHolder>() {
+class LogAdapter(var context: Context, var logs: List<AuthenticationNodeLog>) : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val context = parent?.context
@@ -35,15 +34,10 @@ class LogAdapter (var context: Context, var logs: List<AuthenticationNodeLog>): 
 
         val result = holder?.resultView
         result?.text = log.result.toString().capitalize()
-        if (log.result) {
-            result?.setTextColor(Color.GREEN)
-        } else {
-            result?.setTextColor(Color.RED)
-        }
-}
+    }
 
     override fun getItemCount(): Int {
-       return logs.size
+        return logs.size
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -51,10 +45,12 @@ class LogAdapter (var context: Context, var logs: List<AuthenticationNodeLog>): 
         // for any view that will be set as you render a row
         var labelView: TextView? = null
         var resultView: TextView? = null
+        var cardIcon: TextView? = null
 
         init {
             labelView = itemView.labelTextView
             resultView = itemView.resultTextView
+            cardIcon = itemView.cardIcon
         }
     }
 
