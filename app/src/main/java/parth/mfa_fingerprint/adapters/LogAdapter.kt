@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import kotlinx.android.synthetic.main.item_log.view.*
 import parth.mfa_fingerprint.R
+import parth.mfa_fingerprint.helpers.FontManager
 import parth.mfa_fingerprint.types.AuthenticationNodeLog
 
 
@@ -34,6 +35,10 @@ class LogAdapter(var context: Context, var logs: List<AuthenticationNodeLog>) : 
 
         val result = holder?.resultView
         result?.text = log.result.toString().capitalize()
+
+        val iconFont = FontManager().getTypeface(context, FontManager().fa)
+        val cardIcon = holder?.cardIcon
+        cardIcon?.typeface = iconFont
     }
 
     override fun getItemCount(): Int {
