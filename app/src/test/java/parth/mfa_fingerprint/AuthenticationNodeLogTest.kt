@@ -3,7 +3,7 @@ package parth.mfa_fingerprint
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import parth.mfa_fingerprint.types.AuthenticationNodeLog
+import parth.mfa_fingerprint.room.AuthenticationNodeLog
 import parth.mfa_fingerprint.types.Generator
 import java.util.*
 
