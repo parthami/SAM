@@ -1,6 +1,7 @@
 package parth.mfa_fingerprint.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,12 +11,13 @@ import kotlinx.android.synthetic.main.item_log.view.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.helpers.FontManager
 import parth.mfa_fingerprint.room.AuthenticationNodeLog
+import java.util.*
 
 
 /**
  * Created by Parth Chandratreya on 13/01/2018.
  */
-class LogAdapter(var context: Context, var logs: List<AuthenticationNodeLog>) : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
+class LogAdapter(var context: Context, private var logs: List<AuthenticationNodeLog>) : RecyclerView.Adapter<LogAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val context = parent?.context
@@ -28,16 +30,22 @@ class LogAdapter(var context: Context, var logs: List<AuthenticationNodeLog>) : 
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         // Get the data model based on position
-        val log = logs.get(position)
+        val log = logs[position]
 
         val label = holder?.labelView
         label?.text = log.label
 
-        val result = holder?.resultView
-        result?.text = log.result.toString().capitalize()
+        val time = holder?.timeView
+        time?.text = Date(log.dateTime).toString()
+
+        val cardIcon = holder?.cardIcon
+
+        if(!log.result){
+            cardIcon?.setTextColor(Color.parseColor("#c62828"))
+            cardIcon?.text = context.resources.getString(R.string.fa_times_circle)
+        }
 
         val iconFont = FontManager().getTypeface(context, FontManager().fa)
-        val cardIcon = holder?.cardIcon
         cardIcon?.typeface = iconFont
     }
 
@@ -49,12 +57,12 @@ class LogAdapter(var context: Context, var logs: List<AuthenticationNodeLog>) : 
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         var labelView: TextView? = null
-        var resultView: TextView? = null
+        var timeView: TextView? = null
         var cardIcon: TextView? = null
 
         init {
             labelView = itemView.labelTextView
-            resultView = itemView.resultTextView
+            timeView = itemView.timeTextView
             cardIcon = itemView.cardIcon
         }
     }
