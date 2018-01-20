@@ -9,18 +9,18 @@ import android.arch.persistence.room.OnConflictStrategy.REPLACE
 @Dao
 interface AuthenticationNodeLogDAO {
 
-    @Query("select * from AuthenticationNodeLogTable")
-    fun getAllTasks(): List<AuthenticationNodeLogTable>
+    @Query("select * from AuthenticationNodeLog")
+    fun getAllTasks(): List<AuthenticationNodeLog>
 
-    @Query("select * from task where id = :p0")
-    fun findTaskById(id: Long): AuthenticationNodeLogTable
+//    @Query("select * from AuthenticationNodeLog where id = :p0")
+//    fun findTaskById(id: Long): AuthenticationNodeLog
 
     @Insert(onConflict = REPLACE)
-    fun insertTask(task: AuthenticationNodeLogTable)
+    fun insertTask(task: AuthenticationNodeLog)
 
     @Update(onConflict = REPLACE)
-    fun updateTask(task: AuthenticationNodeLogTable)
+    fun updateTask(task: AuthenticationNodeLog)
 
     @Delete
-    fun deleteTask(task: AuthenticationNodeLogTable)
+    fun deleteTask(task: AuthenticationNodeLog)
 }

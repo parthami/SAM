@@ -9,7 +9,7 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.item_log.view.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.helpers.FontManager
-import parth.mfa_fingerprint.types.AuthenticationNodeLog
+import parth.mfa_fingerprint.room.AuthenticationNodeLog
 
 
 /**

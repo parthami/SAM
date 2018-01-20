@@ -1,13 +1,17 @@
 package parth.mfa_fingerprint.presenters
 
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.hardware.fingerprint.FingerprintManager
 import android.os.CancellationSignal
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.widget.Toast
+import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingeprintPresenterI
 import parth.mfa_fingerprint.interfaces.FingerprintView
+import parth.mfa_fingerprint.room.AppDatabase
+import parth.mfa_fingerprint.room.AuthenticationNodeLog
 import parth.mfa_fingerprint.types.AuthenticationNode
 import java.io.IOException
 import java.security.InvalidKeyException
@@ -15,8 +19,11 @@ import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.UnrecoverableKeyException
 import java.security.cert.CertificateException
+import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
+
+
 
 
 /**
@@ -66,7 +73,7 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
     class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject, private var fingerprintView: FingerprintView) : FingerprintManager.AuthenticationCallback() {
 
         private var node = AuthenticationNode.FINGERPRINT
-//        private var datetime = LocalDateTime.now()
+        var db = Room.databaseBuilder(context,AppDatabase::class.java, "authenticationLogs").build()
 
         fun startAuthentication() {
             val fingerprintMgr: FingerprintManager =  context.getSystemService(FingerprintManager::class.java)
@@ -90,7 +97,10 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
 
         override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult) {
             Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
-//            var log = AuthenticationNodeLog(0, node.label, true)
+            val log = AuthenticationNodeLog(node.label, true, Date().time)
+            doAsync {
+                db.authenticationNodeLogDAO().insertTask(log)
+            }
             fingerprintView.onResult(true)
         }
     }

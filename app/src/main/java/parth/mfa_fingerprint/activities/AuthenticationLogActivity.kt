@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_authentication_log_actvity.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.adapters.LogAdapter
 import parth.mfa_fingerprint.helpers.SpacesItemDecoration
-import parth.mfa_fingerprint.types.Generator
+import parth.mfa_fingerprint.room.AppDatabase
 
 
 class AuthenticationLogActivity : Activity() {
@@ -19,8 +19,10 @@ class AuthenticationLogActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication_log_actvity)
+        val db =  AppDatabase.getAppDatabase(this)
 
-        val logs = Generator.createExampleLogs(50)
+//        val logs = Generator.createExampleLogs(50)
+        val logs = db.authenticationNodeLogDAO().getAllTasks()
         val adapter = LogAdapter(this, logs)
         logRecycler.adapter = adapter
 
