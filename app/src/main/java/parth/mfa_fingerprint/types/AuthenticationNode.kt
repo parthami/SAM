@@ -5,5 +5,6 @@ package parth.mfa_fingerprint.types
  */
 enum class AuthenticationNode(val label: String ) {
     FINGERPRINT("Fingerprint"),
-    KEYSTROKE("Keyboard")
+    KEYSTROKE("Keyboard"),
+    PASSWORD("Password")
 }

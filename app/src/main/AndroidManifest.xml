@@ -25,10 +25,11 @@
         <activity
             android:name=".activities.FingerprintActivity"
             android:parentActivityName=".activities.MainActivity" />
-        <!--Acticity-->
+        <!-- Acticity -->
         <activity
             android:name=".activities.AuthenticationLogActivity"
             android:exported="true" />
+        <activity android:name=".activities.PasswordActivity"></activity>
     </application>
 
 </manifest>

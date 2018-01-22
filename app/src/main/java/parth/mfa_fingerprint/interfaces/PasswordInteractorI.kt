@@ -1,0 +1,9 @@
+package parth.mfa_fingerprint.interfaces
+
+/**
+ * Created by Parth Chandratreya on 22/01/2018.
+ */
+interface PasswordInteractorI {
+    fun savePassword(){}
+    fun loadPassword(){}
+}

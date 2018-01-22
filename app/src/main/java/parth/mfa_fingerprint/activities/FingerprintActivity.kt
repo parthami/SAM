@@ -21,10 +21,11 @@ class FingerprintActivity : Activity(), FingerprintView {
         /* Create the Presenter and Interactor */
         interactor = FingerprintInteractor()
         presenter = FingerprintPresenter(this, interactor)
-
+        // Start the authentication process
         presenter.setupCryto()
         presenter.checkForFingerprints(applicationContext)
         presenter.initCipher("default_key")
+        // Listen for a fingerprint on the sensor
         presenter.startListening(this)
     }
 

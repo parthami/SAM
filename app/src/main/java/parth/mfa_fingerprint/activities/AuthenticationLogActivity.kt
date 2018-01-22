@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
-import android.view.Menu
 import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_authentication_log.*
 import parth.mfa_fingerprint.R
@@ -39,8 +38,8 @@ class AuthenticationLogActivity : Activity() {
         logRecycler.layoutManager = LinearLayoutManager(this)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu) : Boolean    {
-        menuInflater.inflate(R.menu.settings, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu) : Boolean    {
+//        menuInflater.inflate(R.menu.settings, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
 }

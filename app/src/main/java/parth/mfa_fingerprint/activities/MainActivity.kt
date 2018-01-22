@@ -18,15 +18,25 @@ class MainActivity : Activity(), MainView {
         setContentView(R.layout.activity_main)
         // Set text for factors
         val fingerprint = AuthenticationNode.FINGERPRINT
+        val password = AuthenticationNode.PASSWORD
+        // Set the factor labels
         factorOneText.text = fingerprint.label
+        factorTwoText.text = password.label
     }
 
     override fun auth1Click(view: View) {
+        // Load the fingerprint Activity
         val intent = Intent(this, FingerprintActivity::class.java)
         startActivityForResult(intent, AUTHENTICATION_ONE_COMPLETED)
     }
 
+    fun auth2Click(view: View) {
+        val intent = Intent(this, PasswordActivity::class.java)
+        startActivity(intent)
+    }
+
     fun logView(view: View) {
+        // Load the Log View Activity
         val intent = Intent(this, AuthenticationLogActivity::class.java)
         startActivity(intent)
     }
