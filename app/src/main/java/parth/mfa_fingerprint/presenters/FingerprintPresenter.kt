@@ -70,7 +70,7 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
         fingerprintHandler.startAuthentication()
     }
 
-    class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject, private var fingerprintView: FingerprintView) : FingerprintManager.AuthenticationCallback() {
+    class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject, private var  fingerprintView: FingerprintView) : FingerprintManager.AuthenticationCallback() {
 
         private var node = AuthenticationNode.FINGERPRINT
         var db = Room.databaseBuilder(context,AppDatabase::class.java, "authenticationLogs").build()

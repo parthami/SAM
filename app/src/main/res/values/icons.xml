@@ -2,4 +2,5 @@
 <resources>
     <string name="fa_times_circle">&#xf057;</string>
     <string name="fa_check_circle">&#xf058;</string>
+    <string name="fa_sliders_h">&#xf1de;</string>
 </resources>

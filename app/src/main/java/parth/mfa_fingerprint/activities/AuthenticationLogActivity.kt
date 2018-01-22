@@ -4,8 +4,9 @@ import android.app.Activity
 import android.os.Bundle
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import android.view.animation.AnimationUtils
-import kotlinx.android.synthetic.main.activity_authentication_log_actvity.*
+import kotlinx.android.synthetic.main.activity_authentication_log.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.adapters.LogAdapter
 import parth.mfa_fingerprint.helpers.SpacesItemDecoration
@@ -18,8 +19,8 @@ class AuthenticationLogActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_authentication_log_actvity)
-        val db =  AppDatabase.getAppDatabase(this)
+        setContentView(R.layout.activity_authentication_log)
+        val db = AppDatabase.getAppDatabase(this)
 
 //        val logs = Generator.createExampleLogs(50)
         val logs = db.authenticationNodeLogDAO().getAllTasks()
@@ -36,5 +37,10 @@ class AuthenticationLogActivity : Activity() {
         logRecycler.layoutAnimation = animation
 
         logRecycler.layoutManager = LinearLayoutManager(this)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu) : Boolean    {
+        menuInflater.inflate(R.menu.settings, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 }
