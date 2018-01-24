@@ -30,6 +30,7 @@
             android:name=".activities.AuthenticationLogActivity"
             android:exported="true" />
         <activity android:name=".activities.PasswordActivity"></activity>
+        <activity android:name=".interactors.PasswordInteractor" />
     </application>
 
 </manifest>
