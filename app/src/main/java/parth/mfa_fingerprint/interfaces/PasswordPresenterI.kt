@@ -7,6 +7,6 @@ import android.text.Editable
  */
 interface  PasswordPresenterI {
     fun hashPassword(editable: Editable){}
-    fun savePassword(){}
-    fun comparePassword(): Boolean
+    fun savePassword(encryptedPassword: ByteArray, salt: ByteArray, iv: ByteArray){}
+    fun comparePassword(editable: Editable): Boolean
 }
