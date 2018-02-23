@@ -22,7 +22,7 @@ class AuthenticationLogActivity : Activity() {
         val db = AppDatabase.getAppDatabase(this)
 
 //        val logs = Generator.createExampleLogs(50)
-        val logs = db.authenticationNodeLogDAO().getAllTasks()
+        val logs = db.authenticationNodeLogDAO().getAllLogs()
         val adapter = LogAdapter(this, logs)
         logRecycler.adapter = adapter
 

@@ -2,6 +2,7 @@ package parth.mfa_fingerprint.adapters
 
 import android.content.Context
 import android.graphics.Color
+import android.icu.text.SimpleDateFormat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -36,7 +37,9 @@ class LogAdapter(var context: Context, private var logs: List<AuthenticationNode
         label?.text = log.label
 
         val time = holder?.timeView
-        time?.text = Date(log.dateTime).toString()
+        val date = Date(log.dateTime)
+        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:s")
+        time?.text = sdf.format(date).toString()
 
         val cardIcon = holder?.cardIcon
 

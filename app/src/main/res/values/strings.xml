@@ -17,4 +17,7 @@
     <string name="enterPassword">Enter password:</string>
     <string name="savePassword">Save</string>
     <string name="checkPassword">Check</string>
+    <string name="lightButton">Light</string>
+    <string name="motionButton">Motion</string>
+    <string name="soundButton">Sound</string>
 </resources>

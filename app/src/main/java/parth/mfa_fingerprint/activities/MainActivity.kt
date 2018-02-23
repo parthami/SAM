@@ -37,7 +37,7 @@ class MainActivity : Activity(), MainView {
 
     fun logView(view: View) {
         // Load the Log View Activity
-        val intent = Intent(this, AuthenticationLogActivity::class.java)
+        val intent = Intent(this, SensorActivity::class.java)
         startActivity(intent)
     }
 

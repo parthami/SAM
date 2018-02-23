@@ -23,7 +23,7 @@ class PasswordPresenter(val view: PasswordView, private val interactor: Password
     private val keyLength = 256
     private val saltLength = keyLength / 8
 
-    override fun hashPassword(editable: Editable) {
+    override fun hashPassword(editable: Editable)  {
         passwordToEncrypt = editable.toString().toCharArray()
         val random = SecureRandom()
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")

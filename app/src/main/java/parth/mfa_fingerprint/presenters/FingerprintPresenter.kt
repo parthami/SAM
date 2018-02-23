@@ -94,7 +94,7 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
             Toast.makeText(context, "Authentication failed.", Toast.LENGTH_LONG).show()
             val log = AuthenticationNodeLog(node.label, false, Date().time)
             doAsync {
-                db.authenticationNodeLogDAO().insertTask(log)
+                db.authenticationNodeLogDAO().insertLog(log)
             }
             fingerprintView.onResult(false)
         }
@@ -103,7 +103,7 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
             Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
             val log = AuthenticationNodeLog(node.label, true, Date().time)
             doAsync {
-                db.authenticationNodeLogDAO().insertTask(log)
+                db.authenticationNodeLogDAO().insertLog(log)
             }
             fingerprintView.onResult(true)
         }
