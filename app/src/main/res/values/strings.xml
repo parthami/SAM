@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MFA</string>
+    <string name="app_name">SAM</string>
     <string name="authTitle">Authentication</string>
     <string name="authSubTitle">These are the three factors</string>
     <string name="auth1">Authentication Factor 1</string>

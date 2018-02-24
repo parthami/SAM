@@ -3,19 +3,21 @@ package parth.mfa_fingerprint.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.MainView
 import parth.mfa_fingerprint.types.AuthenticationNode
 
-class MainActivity : Activity(), MainView {
+class FactorActivity : AppCompatActivity(), MainView {
 
     private val AUTHENTICATION_ONE_COMPLETED = 0
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(findViewById(R.id.toolbar))
         // Set text for factors
         val fingerprint = AuthenticationNode.FINGERPRINT
         val password = AuthenticationNode.PASSWORD

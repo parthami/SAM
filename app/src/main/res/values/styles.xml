@@ -8,7 +8,9 @@
     <!--   theme UI controls like checkboxes and text fields -->
     <item name="android:colorAccent">@color/secondaryColor</item>
     <item name="colorButtonNormal">@color/primaryLightColor</item>
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
+    <item name="colorControlHighlight">@color/secondaryColor</item>
+
+    <item name="android:textColorPrimary">@color/primaryTextColor</item>
+    <item name="android:textColorSecondary">@color/secondaryTextColor</item>
     </style>
 </resources>

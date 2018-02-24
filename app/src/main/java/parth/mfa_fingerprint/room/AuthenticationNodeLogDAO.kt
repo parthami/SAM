@@ -9,8 +9,11 @@ import android.arch.persistence.room.OnConflictStrategy.REPLACE
 @Dao
 interface AuthenticationNodeLogDAO {
 
-    @Query("select * from AuthenticationNodeLog")
+    @Query("select * from AuthenticationNodeLog order by date desc")
     fun getAllLogs(): List<AuthenticationNodeLog>
+
+    @Query("delete from AuthenticationNodeLog")
+    fun deleteAllLogs()
 
     @Insert(onConflict = REPLACE)
     fun insertLog(task: AuthenticationNodeLog)

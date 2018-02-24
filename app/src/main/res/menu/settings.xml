@@ -2,11 +2,18 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-        <!-- "Mark Favorite", should appear as action button if possible -->
     <item
-        android:id="@+id/action_favorite"
-        android:title="@string/fa_sliders_h"
+        android:id="@+id/factors"
+        android:icon="@drawable/ic_https_white_48dp"
+        android:title="Factors"
         android:visible="true"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/clearLogs"
+        android:icon="@drawable/ic_clear_all_white_48dp"
+        android:title="Clear All"
+        android:visible="true"
+        app:showAsAction="ifRoom" />
 
 </menu>
