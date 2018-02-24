@@ -16,7 +16,6 @@ import parth.mfa_fingerprint.helpers.SpacesItemDecoration
 import parth.mfa_fingerprint.room.AppDatabase
 
 class AuthenticationLogActivity : AppCompatActivity() {
-//    var logs = ArrayList<AuthenticationNodeLog>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +24,6 @@ class AuthenticationLogActivity : AppCompatActivity() {
 
         val db = AppDatabase.getAppDatabase(this)
 
-//        val logs = Generator.createExampleLogs(50)
         val logs = db.authenticationNodeLogDAO().getAllLogs()
         val adapter = LogAdapter(this, logs)
         logRecycler.adapter = adapter
@@ -35,9 +33,6 @@ class AuthenticationLogActivity : AppCompatActivity() {
 
         val itemDecoration = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         logRecycler.addItemDecoration(itemDecoration)
-
-//        val animation = AnimationUtils.loadLayoutAnimation(this, R.anim.layout_animation_fall_down)
-//        logRecycler.layoutAnimation = animation
 
         logRecycler.layoutManager = LinearLayoutManager(this)
     }
