@@ -17,16 +17,18 @@ import parth.mfa_fingerprint.room.AppDatabase
 
 class AuthenticationLogActivity : AppCompatActivity() {
 
+    private val db = AppDatabase.getAppDatabase(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication_log)
         setSupportActionBar(findViewById(R.id.toolbar))
 
-        val db = AppDatabase.getAppDatabase(this)
+        logRecycler.setHasFixedSize(true)
 
-        val logs = db.authenticationNodeLogDAO().getAllLogs()
-        val adapter = LogAdapter(this, logs)
-        logRecycler.adapter = adapter
+//        logRecycler.setEmptyView(emptyView)
+
+        setLogAdapter()
 
         val decoration = SpacesItemDecoration(16)
         logRecycler.addItemDecoration(decoration)
@@ -49,7 +51,8 @@ class AuthenticationLogActivity : AppCompatActivity() {
             true
         }
         R.id.clearLogs -> {
-
+            db.authenticationNodeLogDAO().deleteAllLogs()
+            setLogAdapter()
             runLayoutAnimation(logRecycler)
             true
         }
@@ -65,5 +68,11 @@ class AuthenticationLogActivity : AppCompatActivity() {
         recyclerView.layoutAnimation = controller
         recyclerView.adapter.notifyDataSetChanged()
         recyclerView.scheduleLayoutAnimation()
+    }
+
+    private fun setLogAdapter(){
+        val logs = db.authenticationNodeLogDAO().getAllLogs()
+        val adapter = LogAdapter(this, logs)
+        logRecycler.adapter = adapter
     }
 }

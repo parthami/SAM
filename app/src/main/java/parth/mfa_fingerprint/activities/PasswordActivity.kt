@@ -1,9 +1,9 @@
 package parth.mfa_fingerprint.activities
 
-import android.app.Activity
 import android.arch.persistence.room.Room
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_password.*
@@ -17,7 +17,7 @@ import parth.mfa_fingerprint.room.AuthenticationNodeLog
 import parth.mfa_fingerprint.types.AuthenticationNode
 import java.util.*
 
-class PasswordActivity : Activity(), PasswordView {
+class PasswordActivity : AppCompatActivity(), PasswordView {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var interactor: PasswordInteractor
@@ -29,6 +29,7 @@ class PasswordActivity : Activity(), PasswordView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         sharedPreferences = getPreferences(android.content.Context.MODE_PRIVATE)
         interactor = PasswordInteractor(sharedPreferences)
@@ -37,6 +38,8 @@ class PasswordActivity : Activity(), PasswordView {
 
     override fun checkClick(view: View) {
         // Compare the password
+        // TODO fix empty password check
+
         val log = if (presenter.comparePassword(passwordField.text)) {
             Toast.makeText(this, "Password verified!", Toast.LENGTH_LONG).show()
             AuthenticationNodeLog(node.label, true, Date().time)

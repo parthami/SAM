@@ -1,14 +1,20 @@
 package parth.mfa_fingerprint.activities
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_factors.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.MainView
 import parth.mfa_fingerprint.types.AuthenticationNode
+
+
+
+
 
 class FactorActivity : AppCompatActivity(), MainView {
 
@@ -16,7 +22,7 @@ class FactorActivity : AppCompatActivity(), MainView {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_factors)
         setSupportActionBar(findViewById(R.id.toolbar))
         // Set text for factors
         val fingerprint = AuthenticationNode.FINGERPRINT
@@ -26,10 +32,14 @@ class FactorActivity : AppCompatActivity(), MainView {
         factorTwoText.text = password.label
     }
 
+    @SuppressLint("RestrictedApi")
     override fun auth1Click(view: View) {
         // Load the fingerprint Activity
         val intent = Intent(this, FingerprintActivity::class.java)
-        startActivityForResult(intent, AUTHENTICATION_ONE_COMPLETED)
+//        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, imageView, "factorOneTitleTrans")
+        val options = ActivityOptions.makeSceneTransitionAnimation(this, factorOneText, "factorOneTitleTrans")
+//        startActivityForResult(intent,AUTHENTICATION_ONE_COMPLETED,options.toBundle())
+        startActivity(intent, options.toBundle())
     }
 
     fun auth2Click(view: View) {

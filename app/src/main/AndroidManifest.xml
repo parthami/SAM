@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
 
         <!-- Activity -->
-        <activity android:name=".activities.FactorActivity"/>
+        <activity android:name=".activities.FactorActivity" />
         <!-- Activity -->
         <activity
             android:name=".activities.FingerprintActivity"
@@ -22,14 +22,16 @@
         <!-- Actvitiy -->
         <activity
             android:name=".activities.AuthenticationLogActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.PasswordActivity" />
-        <activity android:name=".activities.SensorActivity"/>
+        <activity android:name=".activities.SensorActivity" />
+        <activity android:name=".activities.QrActivity"/>
     </application>
 
 </manifest>

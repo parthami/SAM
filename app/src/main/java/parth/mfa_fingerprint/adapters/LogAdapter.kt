@@ -24,9 +24,9 @@ class LogAdapter(var context: Context, private var logs: List<AuthenticationNode
         val context = parent?.context
         val inflater = LayoutInflater.from(context)
         // Inflate the custom layout
-        val contactView = inflater.inflate(R.layout.item_log, parent, false)
+        val logsView = inflater.inflate(R.layout.item_log, parent, false)
         // Return a new holder instance
-        return ViewHolder(contactView)
+        return ViewHolder(logsView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
