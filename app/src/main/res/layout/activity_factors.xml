@@ -39,7 +39,7 @@
         android:text="@string/auth1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        android:transitionName="factorOneTitleTrans" />
+        android:transitionName="factorOneTextTrans"/>
 
     <TextView
         android:id="@+id/factorTwoText"
@@ -52,14 +52,15 @@
         app:layout_constraintTop_toBottomOf="@+id/factorOneText" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/factorThreeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="144dp"
         android:text="@string/auth3"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/factorTwoText" />
+        app:layout_constraintTop_toBottomOf="@+id/factorTwoText"
+        android:transitionName="factorThreeTitleTrans"/>
 
     <Button
         android:id="@+id/auth1Button"
@@ -102,9 +103,10 @@
         android:layout_marginEnd="16dp"
         android:background="@color/secondaryColor"
         android:elevation="2dp"
-        android:onClick="logView"
+        android:onClick="auth3Click"
         android:text="@string/toggleF"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/factorThreeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:transitionName="factorThreeButtonTrans" />
 
 </android.support.constraint.ConstraintLayout>

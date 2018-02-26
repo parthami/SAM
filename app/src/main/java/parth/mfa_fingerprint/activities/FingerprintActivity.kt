@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.transition.Slide
+import android.view.Gravity
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingerprintView
@@ -20,6 +22,7 @@ class FingerprintActivity : AppCompatActivity(), FingerprintView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fingerprint)
         setSupportActionBar(findViewById(R.id.toolbar))
+        setupWindowAnimations()
         /* Create the Presenter and Interactor */
         interactor = FingerprintInteractor()
         presenter = FingerprintPresenter(this, interactor)
@@ -29,6 +32,13 @@ class FingerprintActivity : AppCompatActivity(), FingerprintView {
         presenter.initCipher("default_key")
         // Listen for a fingerprint on the sensor
         presenter.startListening(this)
+    }
+
+    private fun setupWindowAnimations() {
+        val slide = Slide()
+        slide.duration = 100
+        slide.slideEdge = Gravity.LEFT
+        window.enterTransition = slide
     }
 
     override fun onResult(boolean: Boolean) {

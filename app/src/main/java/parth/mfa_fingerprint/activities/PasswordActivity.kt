@@ -4,6 +4,8 @@ import android.arch.persistence.room.Room
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.transition.Slide
+import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_password.*
@@ -30,6 +32,7 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
         setSupportActionBar(findViewById(R.id.toolbar))
+        setupWindowAnimations()
 
         sharedPreferences = getPreferences(android.content.Context.MODE_PRIVATE)
         interactor = PasswordInteractor(sharedPreferences)
@@ -58,5 +61,12 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
         Toast.makeText(this, "Password saved!", Toast.LENGTH_LONG).show()
         passwordField.text.clear()
 
+    }
+
+    private fun setupWindowAnimations() {
+        val slide = Slide()
+        slide.duration = 100
+        slide.slideEdge = Gravity.LEFT
+        window.enterTransition = slide
     }
 }

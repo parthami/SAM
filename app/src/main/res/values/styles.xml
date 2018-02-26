@@ -17,8 +17,8 @@
         <item name="android:windowActivityTransitions">true</item>
 
         <!-- specify enter and exit transitions -->
-        <!--<item name="android:windowEnterTransition">@transition/explode</item>-->
-        <!--<item name="android:windowExitTransition">@transition/explode</item>-->
+        <!--<item name="android:windowEnterTransition">@transition/slide</item>-->
+        <!--<item name="android:windowExitTransition">@transition/slide</item>-->
 
          specify shared element transitions
         <item name="android:windowSharedElementEnterTransition">
