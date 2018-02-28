@@ -19,12 +19,11 @@ import parth.mfa_fingerprint.presenters.QrPresenter
 import java.text.SimpleDateFormat
 import java.util.*
 
-
-
-
 class QrActivity : AppCompatActivity(), QrView {
     private lateinit var interactor: QrInteractor
     private lateinit var presenter: QrPresenter
+    private val identifier : String = "finalYearProject"
+    private lateinit var encrptyedMAC : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,17 +51,18 @@ class QrActivity : AppCompatActivity(), QrView {
 
     override fun createMAC() {
 //        TODO add actual completion result
-        presenter.generateMAC("finalYearProject")
+        Log.i("PTAG", "Initial identifier: $identifier")
+        presenter.generateMAC(identifier)
         button5.isEnabled = true
-
     }
 
     override fun createQR(view: View) {
         presenter.generateQRCode(qrCodeImage)
     }
 
-    override fun authenticate() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun authenticate(v : View) {
+        val auth : Boolean = presenter.decryptMAC(identifier, encrptyedMAC)
+        scannedText.text = auth.toString()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -74,6 +74,9 @@ class QrActivity : AppCompatActivity(), QrView {
             } else {
                 Log.d("MainActivity", "Scanned")
                 Toast.makeText(this, "Scanned: " + result.contents, Toast.LENGTH_LONG).show()
+                Log.i("PTAG", "Scanned : ${result.contents}")
+//                scannedText.text  =  result.contents
+                encrptyedMAC = result.contents
             }
         } else {
             // This is important, otherwise the result will not be passed to the fragment

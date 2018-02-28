@@ -9,5 +9,5 @@ interface QrView {
     fun createMAC()
     fun createQR(view : View)
     fun launchCamera(view: View)
-    fun authenticate()
+    fun authenticate(v: View)
 }

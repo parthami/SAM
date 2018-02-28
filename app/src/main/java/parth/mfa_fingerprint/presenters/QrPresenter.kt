@@ -1,5 +1,6 @@
 package parth.mfa_fingerprint.presenters
 
+import android.util.Log
 import android.widget.ImageView
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -7,6 +8,7 @@ import com.google.zxing.WriterException
 import com.google.zxing.integration.android.IntentIntegrator
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import parth.mfa_fingerprint.activities.QrActivity
+import parth.mfa_fingerprint.helpers.Base64
 import parth.mfa_fingerprint.interactors.QrInteractor
 import parth.mfa_fingerprint.interfaces.QrPresenterI
 import parth.mfa_fingerprint.interfaces.QrView
@@ -20,12 +22,14 @@ class QrPresenter (val view : QrView, val interactor : QrInteractor ) : QrPresen
 
     override fun generateMAC(string : String) {
         mac = interactor.encryptMAC(string)
+        val converted = Base64.encodeBytes(mac)
+        Log.i("PTAG", "Generate mac: $converted")
     }
 
     override fun generateQRCode(imageView: ImageView) {
         val multiFormatWriter = MultiFormatWriter()
         try {
-            val bitMatrix = multiFormatWriter.encode(mac.toString(), BarcodeFormat.QR_CODE, 200, 200)
+            val bitMatrix = multiFormatWriter.encode(Base64.encodeBytes(mac), BarcodeFormat.QR_CODE, 400, 400)
             val barcodeEncoder = BarcodeEncoder()
             val bitmap = barcodeEncoder.createBitmap(bitMatrix)
             imageView.setImageBitmap(bitmap)
@@ -44,7 +48,7 @@ class QrPresenter (val view : QrView, val interactor : QrInteractor ) : QrPresen
             integrator.initiateScan()
     }
 
-    override fun decryptMAC() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun decryptMAC(identifier: String, encryptedMAC : String): Boolean {
+        return interactor.compareMACs(identifier, encryptedMAC.toByteArray())
     }
 }

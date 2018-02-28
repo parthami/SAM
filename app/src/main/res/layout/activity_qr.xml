@@ -20,9 +20,24 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:background="@color/secondaryColor"
+        android:elevation="2dp"
+        android:onClick="authenticate"
+        android:text="Compare"
+        android:transitionName="factorThreeButtonTrans"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.863"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button7"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:background="@color/secondaryColor"
         android:elevation="2dp"
         android:onClick="createQR"
@@ -30,7 +45,9 @@
         android:transitionName="factorThreeButtonTrans"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -38,16 +55,15 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@color/secondaryColor"
         android:elevation="2dp"
         android:onClick="launchCamera"
         android:text="Camera"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button7"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -79,5 +95,16 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         tools:text="Authentication Factor 3"
         android:transitionName="factorThreeTitleTrans"/>
+
+    <TextView
+        android:id="@+id/scannedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
+        android:text="TextView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 </android.support.constraint.ConstraintLayout>
