@@ -7,9 +7,9 @@ import android.os.CancellationSignal
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.widget.Toast
 import org.jetbrains.anko.doAsync
+import parth.mfa_fingerprint.activities.FingerprintActivity
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingeprintPresenterI
-import parth.mfa_fingerprint.interfaces.FingerprintView
 import parth.mfa_fingerprint.room.AppDatabase
 import parth.mfa_fingerprint.room.AuthenticationNodeLog
 import parth.mfa_fingerprint.types.AuthenticationNode
@@ -30,7 +30,7 @@ import javax.crypto.SecretKey
  * Created by Parth Chandratreya on 31/12/2017.
  */
 
-class FingerprintPresenter (private var fingerprintView: FingerprintView, private var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
+class FingerprintPresenter (private var fingerprintActivity: FingerprintActivity, private var fingerprintInteractor: FingerprintInteractor) : FingeprintPresenterI {
 
     private lateinit var fingerprintCipher: Cipher
 
@@ -66,11 +66,11 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
 
     override fun startListening(context: Context) {
         val cryptoObj: FingerprintManager.CryptoObject = FingerprintManager.CryptoObject(fingerprintCipher)
-        val fingerprintHandler = FingerprintHandler(context, cryptoObj, fingerprintView)
+        val fingerprintHandler = FingerprintHandler(context, cryptoObj, fingerprintActivity)
         fingerprintHandler.startAuthentication()
     }
 
-    class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject, private var  fingerprintView: FingerprintView) : FingerprintManager.AuthenticationCallback() {
+    class FingerprintHandler(private var context: Context, private var cryptoObj: FingerprintManager.CryptoObject, private var fingerprintActivity: FingerprintActivity) : FingerprintManager.AuthenticationCallback() {
 
         private var node = AuthenticationNode.FINGERPRINT
         var db = Room.databaseBuilder(context,AppDatabase::class.java, "authenticationLogs").build()
@@ -82,12 +82,12 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
 
         override fun onAuthenticationError(errMsgId: Int, errString: CharSequence) {
             Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show()
-            fingerprintView.onResult(false)
+            fingerprintActivity.onResult(false)
         }
 
         override fun onAuthenticationHelp(helpMsgId: Int, helpString: CharSequence) {
             Toast.makeText(context, "Authentication help\n" + helpString, Toast.LENGTH_LONG).show()
-            fingerprintView.onResult(false)
+            fingerprintActivity.onResult(false)
         }
 
         override fun onAuthenticationFailed() {
@@ -96,16 +96,17 @@ class FingerprintPresenter (private var fingerprintView: FingerprintView, privat
             doAsync {
                 db.authenticationNodeLogDAO().insertLog(log)
             }
-            fingerprintView.onResult(false)
+            fingerprintActivity.onResult(false)
         }
 
         override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult) {
-            Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
+//            Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
             val log = AuthenticationNodeLog(node.label, true, Date().time)
             doAsync {
                 db.authenticationNodeLogDAO().insertLog(log)
             }
-            fingerprintView.onResult(true)
+            fingerprintActivity.success()
+//            fingerprintActivity.onResult(true)
         }
     }
 

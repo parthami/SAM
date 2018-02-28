@@ -1,32 +1,20 @@
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Material">
-        <!-- Main theme colors -->
-        <!--   your app branding color for the app bar -->
-        <item name="android:colorPrimary">@color/primaryLightColor</item>
-        <!--   darker variant for the status bar and contextual app bars -->
-        <item name="android:colorPrimaryDark">@color/primaryDarkColor</item>
-        <!--   theme UI controls like checkboxes and text fields -->
-        <item name="android:colorAccent">@color/secondaryColor</item>
-        <item name="colorButtonNormal">@color/primaryLightColor</item>
-        <item name="colorControlHighlight">@color/secondaryColor</item>
-
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
-        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
-
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorPrimary">@color/primaryColor</item>
         <item name="android:windowActivityTransitions">true</item>
-
-        <!-- specify enter and exit transitions -->
-        <!--<item name="android:windowEnterTransition">@transition/slide</item>-->
-        <!--<item name="android:windowExitTransition">@transition/slide</item>-->
-
-         specify shared element transitions
         <item name="android:windowSharedElementEnterTransition">
             @transition/change_image_transform
         </item>
         <item name="android:windowSharedElementExitTransition">
             @transition/change_image_transform
         </item>
-
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorAccent">@color/secondaryColor</item>
+        <item name="android:navigationBarColor">@color/primaryDarkColor</item>
+        <item name="android:statusBarColor">@color/primaryDarkColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+        <item name="android:textColorSecondary">@color/secondaryTextColor</item>
     </style>
 </resources>

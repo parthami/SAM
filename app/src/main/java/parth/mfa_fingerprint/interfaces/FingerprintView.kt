@@ -6,4 +6,5 @@ package parth.mfa_fingerprint.interfaces
 interface FingerprintView {
 
     fun onResult(boolean: Boolean)
+    fun success()
 }

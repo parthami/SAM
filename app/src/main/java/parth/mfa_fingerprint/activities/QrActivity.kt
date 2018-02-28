@@ -1,7 +1,9 @@
 package parth.mfa_fingerprint.activities
 
 import android.content.Intent
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.v7.app.AppCompatActivity
 import android.transition.Slide
 import android.util.Log
@@ -14,6 +16,10 @@ import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.QrInteractor
 import parth.mfa_fingerprint.interfaces.QrView
 import parth.mfa_fingerprint.presenters.QrPresenter
+import java.text.SimpleDateFormat
+import java.util.*
+
+
 
 
 class QrActivity : AppCompatActivity(), QrView {
@@ -30,6 +36,14 @@ class QrActivity : AppCompatActivity(), QrView {
         presenter = QrPresenter(this, interactor)
 
         createMAC()
+
+        qrCodeImage.setOnClickListener({
+            Toast.makeText(this, "Clicked", Toast.LENGTH_LONG).show()
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val bd  =  qrCodeImage.drawable as BitmapDrawable
+            MediaStore.Images.Media.insertImage(contentResolver, bd.bitmap ,timeStamp , "qrCode")
+        })
+
     }
 
     override fun launchCamera(view : View) {
@@ -44,7 +58,7 @@ class QrActivity : AppCompatActivity(), QrView {
     }
 
     override fun createQR(view: View) {
-        presenter.generateQRCode(imageView2)
+        presenter.generateQRCode(qrCodeImage)
     }
 
     override fun authenticate() {

@@ -20,4 +20,8 @@
     <string name="lightButton">Light</string>
     <string name="motionButton">Motion</string>
     <string name="soundButton">Sound</string>
+    <string name="fingerprintStep1">Scan your fingerprint</string>
+    <string name="fingerprintStep2">Authentication succeeded</string>
+    <string name="confirmFingerprint">Confirm fingerprint</string>
+    <string name="touchSensor">Touch Sensor</string>
 </resources>

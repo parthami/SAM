@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.transition.Slide
 import android.view.Gravity
+import android.view.View
+import kotlinx.android.synthetic.main.activity_fingerprint.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingerprintView
@@ -39,6 +41,12 @@ class FingerprintActivity : AppCompatActivity(), FingerprintView {
         slide.duration = 100
         slide.slideEdge = Gravity.LEFT
         window.enterTransition = slide
+    }
+
+    override fun success() {
+        fingerprintIcon.visibility = View.INVISIBLE
+        successIcon.visibility = View.VISIBLE
+        fingerprintSideText.text = "Fingerprint authenticated"
     }
 
     override fun onResult(boolean: Boolean) {
