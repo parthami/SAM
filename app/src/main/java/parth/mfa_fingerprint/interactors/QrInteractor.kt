@@ -16,30 +16,41 @@ import javax.crypto.Mac
 class QrInteractor : QrInteractorI {
 
     val hmacKeyAlias : String = "key1"
+//    private lateinit var  key: SecretKey
 
-    override fun encryptMAC(string: String ) : ByteArray {
+    fun generateKey() {
         // Generate HMAC
-        val keyGenerator = KeyGenerator.getInstance( KeyProperties.KEY_ALGORITHM_HMAC_SHA256, "AndroidKeyStore")
+        val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_HMAC_SHA256, "AndroidKeyStore")
         keyGenerator.init(KeyGenParameterSpec.Builder(hmacKeyAlias, KeyProperties.PURPOSE_SIGN).build())
         val key = keyGenerator.generateKey()
-        // Generate MAC
-        val mac = Mac.getInstance("HmacSHA256")
-        mac.init(key)
-        return mac.doFinal(string.toByteArray())
     }
 
-    override fun compareMACs(originalIdentifier : String, encryptedIdentifier: ByteArray): Boolean {
-        Log.i("PTAG", "originalIdentifier:${Base64.decode(originalIdentifier)}")
-        Log.i("PTAG", "encryptedIdentifier : ${Base64.encodeBytes(encryptedIdentifier)}")
+    override fun encryptMAC(string: String) : ByteArray {
         val keyStore = KeyStore.getInstance("AndroidKeyStore")
         keyStore.load(null,null)
         val key = keyStore.getKey(hmacKeyAlias, null)
-        val mac = Mac.getInstance("HmacSHA256")
+        val mac = Mac.getInstance(key.algorithm)
         mac.init(key)
+        // Return the HMAC
+        return mac.doFinal(string.toByteArray())
+    }
+
+    override fun compareMACs(originalIdentifier : String, qrIdentifer: String): Boolean {
+        Log.i("PTAG", "originalIdentifier:$originalIdentifier")
+        val decodedIdentifier = Base64.decode(qrIdentifer)
+        Log.i("PTAG", "qrIdentifer : $decodedIdentifier")
+        // Retrieve Key
+        val keyStore = KeyStore.getInstance("AndroidKeyStore")
+        keyStore.load(null,null)
+        val key = keyStore.getKey(hmacKeyAlias, null)
+        // Generate mac
+        val mac = Mac.getInstance(key.algorithm)
+        mac.init(key)
+        // Compare MAC
         val reencryptedIdentifier = mac.doFinal(originalIdentifier.toByteArray())
-        Log.i("PTAG", "reencryptedIdentifier: ${Base64.decode(reencryptedIdentifier)}")
-//        return compareValues(reencryptedIdentifier, encryptedIdentifier)
-        return reencryptedIdentifier.contentEquals(encryptedIdentifier)
+        val newMAC = Base64.encodeBytes(reencryptedIdentifier)
+        Log.i("PTAG", "newMac: $newMAC")
+        return newMAC.contentEquals(qrIdentifer)
     }
 
 }

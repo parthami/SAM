@@ -49,6 +49,10 @@ class QrPresenter (val view : QrView, val interactor : QrInteractor ) : QrPresen
     }
 
     override fun decryptMAC(identifier: String, encryptedMAC : String): Boolean {
-        return interactor.compareMACs(identifier, encryptedMAC.toByteArray())
+        return interactor.compareMACs(identifier, encryptedMAC)
+    }
+
+    fun generateKey (){
+        interactor.generateKey()
     }
 }
