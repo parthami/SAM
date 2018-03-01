@@ -40,9 +40,11 @@ class QrActivity : AppCompatActivity(), QrView {
 //        createMAC()
 
         floatingActionButton.setOnClickListener({
-            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+//            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val timestamp = SimpleDateFormat("dd-MM-yy", Locale.UK).format(Date())
             val bd  =  qrCodeImage.drawable as BitmapDrawable
-            MediaStore.Images.Media.insertImage(contentResolver, bd.bitmap ,timeStamp , "qrCode")
+            // TODO add file details
+            MediaStore.Images.Media.insertImage(contentResolver, bd.bitmap,timestamp, "qrCode")
             Snackbar.make(coordinatorLayout, "Saved", Snackbar.LENGTH_SHORT).show()
         })
 

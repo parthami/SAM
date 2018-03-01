@@ -2,6 +2,7 @@ package parth.mfa_fingerprint.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -12,8 +13,13 @@ import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_authentication_log.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.adapters.LogAdapter
+import parth.mfa_fingerprint.fragments.SettingsFragment
 import parth.mfa_fingerprint.helpers.SpacesItemDecoration
 import parth.mfa_fingerprint.room.AppDatabase
+
+
+
+
 
 class AuthenticationLogActivity : AppCompatActivity() {
 
@@ -23,6 +29,7 @@ class AuthenticationLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication_log)
         setSupportActionBar(findViewById(R.id.toolbar))
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
 
         logRecycler.setHasFixedSize(true)
 
@@ -54,6 +61,18 @@ class AuthenticationLogActivity : AppCompatActivity() {
             db.authenticationNodeLogDAO().deleteAllLogs()
             setLogAdapter()
             runLayoutAnimation(logRecycler)
+            true
+        }
+        R.id.settings -> {
+            val fragment = SettingsFragment() as android.app.Fragment
+            val fragmentTransaction = fragmentManager.beginTransaction()
+//            if(savedInstanceState == null) {
+                fragmentTransaction.add(R.id.constraintLayout, fragment, "settings")
+                fragmentTransaction.commit()
+//            } else {
+//                fragment = fragmentTransaction.f
+//
+//            }
             true
         }
         else -> {
