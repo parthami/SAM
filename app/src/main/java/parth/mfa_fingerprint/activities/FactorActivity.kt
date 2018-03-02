@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.transition.Slide
-import android.util.Pair
 import android.view.Gravity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_factors.*
@@ -44,9 +43,10 @@ class FactorActivity : AppCompatActivity(), MainView {
     }
 
     fun auth3Click(view: View) {
-        val intent = Intent(this, QrActivity::class.java)
-        val options = ActivityOptions.makeSceneTransitionAnimation(this,  Pair<View, String>(button3, "factorThreeButtonTrans"), Pair<View, String>(factorThreeText, "factorThreeTitleTrans"))
-        startActivity(intent, options.toBundle())
+        val intent = Intent(this, SensorActivity::class.java)
+//        val options = ActivityOptions.makeSceneTransitionAnimation(this,  Pair<View, String>(button3, "factorThreeButtonTrans"), Pair<View, String>(factorThreeText, "factorThreeTitleTrans"))
+//        startActivity(intent, options.toBundle())
+        startActivity(intent)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
