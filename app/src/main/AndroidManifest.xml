@@ -21,7 +21,7 @@
         <activity
             android:name=".activities.FingerprintActivity"
             android:parentActivityName=".activities.FactorActivity" />
-        <!-- Actvitiy -->
+        <!-- Activity -->
         <activity
             android:name=".activities.AuthenticationLogActivity"
             android:exported="true">
@@ -31,9 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- Activities -->
         <activity android:name=".activities.PasswordActivity" />
         <activity android:name=".activities.SensorActivity" />
-        <activity android:name=".activities.QrActivity"/>
+        <activity android:name=".activities.QrActivity" />
+        <activity android:name=".activities.SettingsActivity"
+            android:theme="@style/PreferenceScreen"/>
     </application>
 
 </manifest>

@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:defaultValue="Default value"
-        android:key="edit_text_preference_1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="Edit text preference"
-        android:summary="Save your name"/>
+    <PreferenceCategory
+        android:key="pref_key_password"
+        android:title="Password">
+
+        <EditTextPreference
+            android:defaultValue="password"
+            android:key="pref_key_password"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Change your password"
+        />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_qr"
+        android:title="QR Code">
+
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="pref_key_qr"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Generate new key" />
+
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="pref_key_fingerprint"
+        android:title="Fingerprint">
+
+        <EditTextPreference
+            android:defaultValue="Default value"
+            android:key="pref_key_fingerprint"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:summary="Add or remove fingerprint" />
+
+    </PreferenceCategory>
 </PreferenceScreen>

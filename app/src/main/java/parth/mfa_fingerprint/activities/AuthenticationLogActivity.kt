@@ -13,13 +13,8 @@ import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_authentication_log.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.adapters.LogAdapter
-import parth.mfa_fingerprint.fragments.SettingsFragment
 import parth.mfa_fingerprint.helpers.SpacesItemDecoration
 import parth.mfa_fingerprint.room.AppDatabase
-
-
-
-
 
 class AuthenticationLogActivity : AppCompatActivity() {
 
@@ -29,14 +24,13 @@ class AuthenticationLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication_log)
         setSupportActionBar(findViewById(R.id.toolbar))
+        // Load up first time for settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
 
         logRecycler.setHasFixedSize(true)
-
 //        logRecycler.setEmptyView(emptyView)
-
         setLogAdapter()
-
+        // Set decorations
         val decoration = SpacesItemDecoration(16)
         logRecycler.addItemDecoration(decoration)
 
@@ -64,15 +58,8 @@ class AuthenticationLogActivity : AppCompatActivity() {
             true
         }
         R.id.settings -> {
-            val fragment = SettingsFragment() as android.app.Fragment
-            val fragmentTransaction = fragmentManager.beginTransaction()
-//            if(savedInstanceState == null) {
-                fragmentTransaction.add(R.id.constraintLayout, fragment, "settings")
-                fragmentTransaction.commit()
-//            } else {
-//                fragment = fragmentTransaction.f
-//
-//            }
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
             true
         }
         else -> {

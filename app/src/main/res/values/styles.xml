@@ -19,6 +19,7 @@
     </style>
 
     <style name="PreferenceScreen" parent="AppTheme">
-        <item name="android:textColor">@color/secondaryColor</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+        <item name="android:textColorPrimary">@color/secondaryTextColor</item>
     </style>
 </resources>

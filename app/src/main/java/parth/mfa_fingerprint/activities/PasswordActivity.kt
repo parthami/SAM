@@ -3,12 +3,15 @@ package parth.mfa_fingerprint.activities
 import android.arch.persistence.room.Room
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.preference.PreferenceManager
 import android.transition.Slide
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_password.*
+import kotlinx.android.synthetic.main.activity_qr.*
 import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.PasswordInteractor
@@ -29,12 +32,17 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // setup
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_password)
         setSupportActionBar(findViewById(R.id.toolbar))
         setupWindowAnimations()
-
+        // Shared Pref
         sharedPreferences = getPreferences(android.content.Context.MODE_PRIVATE)
+        val passwordPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val password = passwordPreferences.getString("pref_key_password", "password")
+        savedPasswordExample.text = "Current saved password : $password"
+        // Load presenter and interactor
         interactor = PasswordInteractor(sharedPreferences)
         presenter = PasswordPresenter(this, interactor)
     }
@@ -44,10 +52,10 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
         // TODO fix empty password check
 
         val log = if (presenter.comparePassword(passwordField.text)) {
-            Toast.makeText(this, "Password verified!", Toast.LENGTH_LONG).show()
+            Snackbar.make(coordinatorLayout, "Password verified!", Snackbar.LENGTH_SHORT).show()
             AuthenticationNodeLog(node.label, true, Date().time)
         } else {
-            Toast.makeText(this, "Password incorrect", Toast.LENGTH_LONG).show()
+            Snackbar.make(coordinatorLayout, "Password incorrect", Snackbar.LENGTH_SHORT).show()
             AuthenticationNodeLog(node.label, false,  Date().time)
         }
         doAsync {

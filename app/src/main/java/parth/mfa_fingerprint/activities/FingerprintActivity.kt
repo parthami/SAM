@@ -46,7 +46,7 @@ class FingerprintActivity : AppCompatActivity(), FingerprintView {
     override fun success() {
         fingerprintIcon.visibility = View.INVISIBLE
         successIcon.visibility = View.VISIBLE
-        fingerprintSideText.text = "Fingerprint authenticated"
+        fingerprintSideText.text = "Fingerprint authenticated!"
     }
 
     override fun onResult(boolean: Boolean) {

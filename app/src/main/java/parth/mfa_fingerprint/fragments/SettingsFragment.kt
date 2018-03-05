@@ -10,8 +10,11 @@ import parth.mfa_fingerprint.R
  */
 
 class SettingsFragment : PreferenceFragment() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.preferences)
     }
+
 }
