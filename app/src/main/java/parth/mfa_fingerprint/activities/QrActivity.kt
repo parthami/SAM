@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
+
+
 class QrActivity : AppCompatActivity(), QrView {
     private lateinit var interactor: QrInteractor
     private lateinit var presenter: QrPresenter
@@ -36,7 +38,6 @@ class QrActivity : AppCompatActivity(), QrView {
 
         interactor = QrInteractor()
         presenter = QrPresenter(this, interactor)
-
 //        createMAC()
 
         floatingActionButton.setOnClickListener({
@@ -70,6 +71,7 @@ class QrActivity : AppCompatActivity(), QrView {
     override fun authenticate(v : View) {
         val auth : Boolean = presenter.decryptMAC(identifier, encrptyedMAC)
         scannedText.text = auth.toString()
+        Snackbar.make(coordinatorLayout, "$auth", Snackbar.LENGTH_SHORT).show()
     }
 
     fun generateKey (v : View){

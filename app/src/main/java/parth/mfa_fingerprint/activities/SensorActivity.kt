@@ -7,6 +7,9 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.widget.CompoundButton
 import kotlinx.android.synthetic.main.activity_sensor.*
 import parth.mfa_fingerprint.R
@@ -26,12 +29,28 @@ class SensorActivity : AppCompatActivity(), SensorEventListener, CompoundButton.
         setSupportActionBar(findViewById(R.id.toolbar))
 
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        val sensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
+        val sensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_LIGHT)
         sensorManager!!.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
         toggleButton.setOnCheckedChangeListener(this)
         sensorInfo1.text = "Sensor activity loaded"
 //        motionValue.text = motionLevel
 //        lightValue.text = lightLevel
+        lightValue.addTextChangedListener(textWatcher)
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable) {
+            Log.i("PTAG", "MOTION SENSOR INFO CHANGED")
+//            switchToLight()
+            switchToMotion()
+        }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
@@ -65,6 +84,19 @@ class SensorActivity : AppCompatActivity(), SensorEventListener, CompoundButton.
         sensorManager?.unregisterListener(this)
     }
 
+    fun switchToLight() {
+        sensorManager?.unregisterListener(this)
+        sensor = sensorManager?.getDefaultSensor(Sensor.TYPE_LIGHT)
+        sensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorInfo1.text = "Sensor activity switched to light"
+    }
+
+    fun switchToMotion() {
+        sensorManager?.unregisterListener(this)
+        sensor = sensorManager?.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
+        sensorManager?.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        sensorInfo1.text = "Sensor activity switched to motion"
+    }
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         if (isChecked) {
             sensorManager?.unregisterListener(this)

@@ -22,4 +22,11 @@
         android:visible="true"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/enviro"
+        android:icon="@drawable/ic_clear_all_white_48dp"
+        android:title="Enviroment"
+        android:visible="true"
+        app:showAsAction="never" />
+
 </menu>

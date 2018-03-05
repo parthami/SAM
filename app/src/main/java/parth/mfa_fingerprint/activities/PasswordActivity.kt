@@ -11,7 +11,6 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_password.*
-import kotlinx.android.synthetic.main.activity_qr.*
 import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.PasswordInteractor
@@ -40,22 +39,23 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
         // Shared Pref
         sharedPreferences = getPreferences(android.content.Context.MODE_PRIVATE)
         val passwordPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val password = passwordPreferences.getString("pref_key_password", "password")
-        savedPasswordExample.text = "Current saved password : $password"
+        val savedPassword = passwordPreferences.getString("pref_key_password", "password")
+        savedPasswordExample.text = "Current saved password : $savedPassword"
         // Load presenter and interactor
         interactor = PasswordInteractor(sharedPreferences)
         presenter = PasswordPresenter(this, interactor)
+
+        presenter.hashPassword(savedPassword.toCharArray())
     }
 
     override fun checkClick(view: View) {
         // Compare the password
         // TODO fix empty password check
-
         val log = if (presenter.comparePassword(passwordField.text)) {
-            Snackbar.make(coordinatorLayout, "Password verified!", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(constraintLayout, "Password verified!", Snackbar.LENGTH_SHORT).show()
             AuthenticationNodeLog(node.label, true, Date().time)
         } else {
-            Snackbar.make(coordinatorLayout, "Password incorrect", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(constraintLayout, "Password incorrect", Snackbar.LENGTH_SHORT).show()
             AuthenticationNodeLog(node.label, false,  Date().time)
         }
         doAsync {
@@ -65,7 +65,7 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
 
     override fun saveClick(view: View) {
         // Hash the password
-        presenter.hashPassword(passwordField.text)
+//        presenter.hashPassword(passwordField.text)
         Toast.makeText(this, "Password saved!", Toast.LENGTH_LONG).show()
         passwordField.text.clear()
 

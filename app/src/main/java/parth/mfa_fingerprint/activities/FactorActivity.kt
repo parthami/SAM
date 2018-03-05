@@ -28,6 +28,7 @@ class FactorActivity : AppCompatActivity(), MainView {
         // Set the factor labels
         factorOneText.text = fingerprint.label
         factorTwoText.text = password.label
+        factorThreeText.text = "QR Code"
     }
 
     override fun auth1Click(view: View) {
@@ -43,7 +44,7 @@ class FactorActivity : AppCompatActivity(), MainView {
     }
 
     fun auth3Click(view: View) {
-        val intent = Intent(this, SensorActivity::class.java)
+        val intent = Intent(this, QrActivity::class.java)
 //        val options = ActivityOptions.makeSceneTransitionAnimation(this,  Pair<View, String>(button3, "factorThreeButtonTrans"), Pair<View, String>(factorThreeText, "factorThreeTitleTrans"))
 //        startActivity(intent, options.toBundle())
         startActivity(intent)

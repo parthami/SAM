@@ -62,6 +62,11 @@ class AuthenticationLogActivity : AppCompatActivity() {
             startActivity(intent)
             true
         }
+        R.id.enviro -> {
+            val intent = Intent(this, SensorActivity::class.java)
+            startActivity(intent)
+            true
+        }
         else -> {
             super.onOptionsItemSelected(item)
         }
