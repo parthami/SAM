@@ -63,7 +63,7 @@
         android:transitionName="factorThreeTitleTrans"/>
 
     <Button
-        android:id="@+id/auth1Button"
+        android:id="@+id/factorOneButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -72,7 +72,6 @@
         android:background="@color/secondaryColor"
         android:elevation="2dp"
         android:gravity="center_vertical|center_horizontal"
-        android:onClick="auth1Click"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="@string/toggleF"
@@ -80,7 +79,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/factorTwoButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
@@ -88,7 +87,6 @@
         android:background="@color/secondaryColor"
         android:elevation="2dp"
         android:gravity="center"
-        android:onClick="auth2Click"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:text="@string/toggleF"
@@ -96,17 +94,16 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/factorThreeButton"
         style="@style/Widget.AppCompat.Button"
         android:layout_width="wrap_content"
         android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:background="@color/secondaryColor"
         android:elevation="2dp"
-        android:onClick="auth3Click"
         android:text="@string/toggleF"
+        android:transitionName="factorThreeButtonTrans"
         app:layout_constraintBaseline_toBaselineOf="@+id/factorThreeText"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:transitionName="factorThreeButtonTrans" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
