@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
@@ -35,8 +36,11 @@
         <activity android:name=".activities.PasswordActivity" />
         <activity android:name=".activities.SensorActivity" />
         <activity android:name=".activities.QrActivity" />
-        <activity android:name=".activities.SettingsActivity"
-            android:theme="@style/PreferenceScreen"/>
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:theme="@style/PreferenceScreen" />
+        <activity android:name=".activities.BlankActivity" />
+        <activity android:name=".activities.SelectionActivity"/>
     </application>
 
 </manifest>

@@ -24,11 +24,16 @@ class FactorActivity : AppCompatActivity(), MainView {
         setSupportActionBar(findViewById(R.id.toolbar))
         setupWindowAnimations()
 
-        val factors: Array<AuthenticationNode> = arrayOf(AuthenticationNode.PASSWORD, AuthenticationNode.QR, AuthenticationNode.FINGERPRINT)
+        val factors = intent.getStringArrayListExtra("factors")
+//        val factors: Array<AuthenticationNode> = arrayOf(AuthenticationNode.PASSWORD, AuthenticationNode.QR, AuthenticationNode.FINGERPRINT, AuthenticationNode.BLANK)
         // Set the factors
-        factorOne = factors[0]
-        factorTwo = factors[1]
-        factorThree = factors[2]
+        val factorOneString = factors[0]
+        val factorTwoString = factors[1]
+        val factorThreeString = factors[2]
+
+        factorOne = AuthenticationNode.valueOf(factorOneString)
+        factorTwo = AuthenticationNode.valueOf(factorTwoString)
+        factorThree = AuthenticationNode.valueOf(factorThreeString)
         // Set the factor labels
         factorOneText.text = factorOne.label
         factorTwoText.text = factorTwo.label
@@ -108,7 +113,7 @@ class FactorActivity : AppCompatActivity(), MainView {
     }
 
     fun blankClick() {
-        val intent = Intent(this, PasswordActivity::class.java)
+        val intent = Intent(this, BlankActivity::class.java)
         startActivity(intent)
     }
 }

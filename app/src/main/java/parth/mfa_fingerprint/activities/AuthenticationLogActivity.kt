@@ -47,7 +47,7 @@ class AuthenticationLogActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.factors -> {
-            val intent = Intent(this, FactorActivity::class.java)
+            val intent = Intent(this, SensorActivity::class.java)
             startActivity(intent)
             true
         }
@@ -59,11 +59,6 @@ class AuthenticationLogActivity : AppCompatActivity() {
         }
         R.id.settings -> {
             val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-            true
-        }
-        R.id.enviro -> {
-            val intent = Intent(this, SensorActivity::class.java)
             startActivity(intent)
             true
         }
