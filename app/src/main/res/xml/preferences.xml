@@ -2,6 +2,64 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <PreferenceCategory
+        android:key="pref_key_general"
+        android:title="Light">
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="pref_key_light_lower"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Light lower limit" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:key="pref_key_light_higher"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Light higher limit" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_general"
+        android:title="Motion">
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="pref_key_motion_lower"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Motion lower limit" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:key="pref_key_motion_higher"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Motion higher limit" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_general"
+        android:title="Sound">
+
+        <EditTextPreference
+            android:defaultValue="0"
+            android:key="pref_key_motion_lower"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Sound lower limit" />
+
+        <EditTextPreference
+            android:defaultValue="100"
+            android:key="pref_key_motion_higher"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Sound higher limit" />
+    </PreferenceCategory>
+
+
+    <PreferenceCategory
         android:key="pref_key_password"
         android:title="Password">
 
@@ -10,9 +68,7 @@
             android:key="pref_key_password"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Change your password"
-        />
-
+            android:title="Change your password" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -25,8 +81,8 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Generate new key" />
-
     </PreferenceCategory>
+
     <PreferenceCategory
         android:key="pref_key_fingerprint"
         android:title="Fingerprint">
@@ -36,7 +92,7 @@
             android:key="pref_key_fingerprint"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:summary="Add or remove fingerprint" />
-
+            android:title="Add or remove fingerprint" />
     </PreferenceCategory>
+
 </PreferenceScreen>

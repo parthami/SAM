@@ -30,6 +30,10 @@ class SelectionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_selection)
+        setSupportActionBar(findViewById(R.id.toolbar))
+
+        authButton.isEnabled = false
+        authButton.setBackgroundColor(Color.GRAY)
 
         selection()
     }
@@ -64,7 +68,7 @@ class SelectionActivity : AppCompatActivity() {
             Log.i("PTAG","SOUND disabled")
         }
         // Convert to arraylist of strings
-        val a = 1
+        var enableCounter = 0
         for (i in 0..allFactorList.lastIndex){
             val textView = TextView(this)
             textView.text = allFactorList[i].label
@@ -72,10 +76,16 @@ class SelectionActivity : AppCompatActivity() {
             textView.textSize = 30.0f
             if(!allFactorList[i].enabled) {
                 textView.setTextColor(Color.RED)
+                disabledFactors.addView(textView)
             } else {
                 textView.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
+                enabledFactors.addView(textView)
+                enableCounter++
             }
-            linearLayout.addView(textView)
+        }
+        if(enableCounter > 2) {
+            authButton.isEnabled = true
+            authButton.setBackgroundColor(ContextCompat.getColor(this, R.color.secondaryColor))
         }
         // Send the remaining enabled factors to the list as Strings
 
