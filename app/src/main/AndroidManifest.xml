@@ -40,7 +40,10 @@
             android:name=".activities.SettingsActivity"
             android:theme="@style/PreferenceScreen" />
         <activity android:name=".activities.BlankActivity" />
-        <activity android:name=".activities.SelectionActivity"/>
+        <activity android:name=".activities.SelectionActivity" />
+        <activity android:name=".activities.LocationActivity" />
+        <activity android:name=".activities.VoiceActivity" />
+        <activity android:name=".activities.OneTimeActivity"></activity>
     </application>
 
 </manifest>

@@ -7,14 +7,12 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_authentication_log.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.adapters.LogAdapter
-import parth.mfa_fingerprint.helpers.AliasMethod
 import parth.mfa_fingerprint.helpers.SpacesItemDecoration
 import parth.mfa_fingerprint.room.AppDatabase
 
@@ -41,10 +39,10 @@ class AuthenticationLogActivity : AppCompatActivity() {
 
         logRecycler.layoutManager = LinearLayoutManager(this)
 
-        val input = doubleArrayOf(0.125,0.20,0.1,0.25,0.1,0.1,0.125)
-        val alias = AliasMethod(input)
-        val output = alias.generation()
-        Log.i("PTAG", "$output")
+//        val input = doubleArrayOf(0.125,0.20,0.1,0.25,0.1,0.1,0.125)
+//        val alias = AliasMethod(input)
+//        val output = alias.generation()
+//        Log.i("PTAG", "$output")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

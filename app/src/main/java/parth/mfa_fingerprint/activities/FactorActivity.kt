@@ -64,6 +64,15 @@ class FactorActivity : AppCompatActivity(), MainView {
             AuthenticationNode.BLANK.label -> {
                 return blankClick()
             }
+            AuthenticationNode.LOCATION.label -> {
+                return locationClick()
+            }
+            AuthenticationNode.ONETIME.label -> {
+                return oneTimeClick()
+            }
+            AuthenticationNode.VOICE.label -> {
+                return voiceClick()
+            }
         }
     }
 
@@ -97,23 +106,38 @@ class FactorActivity : AppCompatActivity(), MainView {
         window.exitTransition = slide
     }
 
-    fun fingerprintClick() {
+    private fun fingerprintClick() {
         val intent = Intent(this, FingerprintActivity::class.java)
         startActivity(intent)
     }
 
-    fun qrClick() {
+    private fun qrClick() {
         val intent = Intent(this, QrActivity::class.java)
         startActivity(intent)
     }
 
-    fun passwordClick() {
+    private fun passwordClick() {
         val intent = Intent(this, PasswordActivity::class.java)
         startActivity(intent)
     }
 
-    fun blankClick() {
+    private fun blankClick() {
         val intent = Intent(this, BlankActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun locationClick() {
+        val intent = Intent(this, LocationActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun voiceClick() {
+        val intent = Intent(this, VoiceActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun oneTimeClick() {
+        val intent = Intent(this, OneTimeActivity::class.java)
         startActivity(intent)
     }
 }

@@ -6,7 +6,7 @@ import java.util.*
 /**
  * Created by Parth Chandratreya on 13/03/2018.
  */
-class AliasMethod(var incoming: DoubleArray) {
+class AliasMethod(var incoming: ArrayList<Double>) {
 
     private var alias: IntArray
     private var probabilities: DoubleArray
@@ -64,7 +64,6 @@ class AliasMethod(var incoming: DoubleArray) {
 //        Set Prob[l]=1.
         while (!small.isEmpty())
             probabilities[small.removeLast()] = 1.0
-        var finsihed = 1
     }
 
     fun generation(): Int {
