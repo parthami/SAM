@@ -18,6 +18,7 @@ package parth.mfa_fingerprint.helpers
 
 import android.media.MediaRecorder
 import java.io.IOException
+import kotlin.math.round
 
 class SoundMeter {
 
@@ -54,7 +55,7 @@ class SoundMeter {
 
     val amplitude: Double
         get() = if (mRecorder != null)
-            mRecorder!!.maxAmplitude.toDouble()
+            round((mRecorder!!.maxAmplitude.toDouble() / 32767.0) * 100.0)
         else
             1.0
 }

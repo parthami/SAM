@@ -60,7 +60,7 @@ class SensorActivity : AppCompatActivity(), SensorEventListener {
         override fun run() {
             rawSoundLevel = soundMeter.amplitude
             Log.i("PTAG", "Checking sound: $rawSoundLevel")
-            soundLevel = "$rawSoundLevel dB"
+            soundLevel = "$rawSoundLevel %"
             if (rawSoundLevel == 0.0) {
                 mHandler.postDelayed(this, 1000)
             } else {
