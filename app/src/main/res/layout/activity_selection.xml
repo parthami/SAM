@@ -19,7 +19,7 @@
         android:id="@+id/authButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@color/secondaryColor"
@@ -29,6 +29,9 @@
         android:text="Authenticate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout
@@ -38,7 +41,7 @@
         android:layout_marginBottom="348dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="64dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/authButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,9 +66,9 @@
         android:id="@+id/disabledFactors"
         android:layout_width="match_parent"
         android:layout_height="264dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enabledFactors">

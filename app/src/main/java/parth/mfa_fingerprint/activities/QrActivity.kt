@@ -1,5 +1,6 @@
 package parth.mfa_fingerprint.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
@@ -72,6 +73,7 @@ class QrActivity : AppCompatActivity(), QrView {
         val auth : Boolean = presenter.decryptMAC(identifier, encrptyedMAC)
         scannedText.text = auth.toString()
         Snackbar.make(coordinatorLayout, "$auth", Snackbar.LENGTH_SHORT).show()
+        onResult(auth)
     }
 
     fun generateKey (v : View){
@@ -102,5 +104,12 @@ class QrActivity : AppCompatActivity(), QrView {
         slide.duration = 100
         slide.slideEdge = Gravity.LEFT
         window.enterTransition = slide
+    }
+
+    fun onResult(boolean: Boolean) {
+        val intent = Intent()
+        intent.putExtra("result", boolean)
+        setResult(Activity.RESULT_OK, intent)
+        finishAfterTransition()
     }
 }

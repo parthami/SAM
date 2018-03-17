@@ -24,6 +24,7 @@ class AuthenticationLogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentication_log)
         setSupportActionBar(findViewById(R.id.toolbar))
+        supportActionBar?.title = "Authentication Log"
         // Load up first time for settings
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
 

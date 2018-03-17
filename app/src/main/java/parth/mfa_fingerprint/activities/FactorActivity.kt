@@ -2,10 +2,14 @@ package parth.mfa_fingerprint.activities
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
+import android.view.View
 import kotlinx.android.synthetic.main.activity_factors.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.MainView
@@ -13,10 +17,13 @@ import parth.mfa_fingerprint.types.AuthenticationNode
 
 class FactorActivity : AppCompatActivity(), MainView {
 
-    private val AUTHENTICATION_ONE_COMPLETED = 0
+    private val authentication_one_result = 0
+    private val authentication_two_result = 1
+    private val authentication_three_result = 2
     lateinit var factorOne : AuthenticationNode
     lateinit var factorTwo : AuthenticationNode
     lateinit var factorThree : AuthenticationNode
+    private var factorCounter : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,38 +47,38 @@ class FactorActivity : AppCompatActivity(), MainView {
         factorThreeText.text = factorThree.label
         //Set on clicks
         factorOneButton.setOnClickListener({
-            setFactorOnClick(factorOne.label)
+            setFactorOnClick(factorOne.label,authentication_one_result)
         })
         factorTwoButton.setOnClickListener({
-            setFactorOnClick(factorTwo.label)
+            setFactorOnClick(factorTwo.label,authentication_two_result)
         })
         factorThreeButton.setOnClickListener({
-            setFactorOnClick(factorThree.label)
+            setFactorOnClick(factorThree.label,authentication_three_result)
         })
     }
 
-    private fun setFactorOnClick(s : String) {
+    private fun setFactorOnClick(s : String, resultCode: Int) {
         when(s) {
             AuthenticationNode.FINGERPRINT.label -> {
-                return fingerprintClick()
+                return fingerprintClick(resultCode)
             }
             AuthenticationNode.PASSWORD.label -> {
-                return passwordClick()
+                return passwordClick(resultCode)
             }
             AuthenticationNode.QR.label -> {
-                return qrClick()
+                return qrClick(resultCode)
             }
             AuthenticationNode.BLANK.label -> {
-                return blankClick()
+                return blankClick(resultCode)
             }
             AuthenticationNode.LOCATION.label -> {
-                return locationClick()
+                return locationClick(resultCode)
             }
             AuthenticationNode.ONETIME.label -> {
-                return oneTimeClick()
+                return oneTimeClick(resultCode)
             }
             AuthenticationNode.VOICE.label -> {
-                return voiceClick()
+                return voiceClick(resultCode)
             }
         }
     }
@@ -91,11 +98,41 @@ class FactorActivity : AppCompatActivity(), MainView {
 //    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode == AUTHENTICATION_ONE_COMPLETED && resultCode == Activity.RESULT_OK) {
-            // Retrieve Authentication result
+        if (requestCode == authentication_one_result && resultCode == Activity.RESULT_OK) {
             val b = data.getBooleanExtra("result", false)
             //  Set the button based on the result
-            factorOneButton.isEnabled = !b
+            factorOneButton.isEnabled = false
+            factorOneButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
+            factorOneText.typeface = Typeface.DEFAULT_BOLD
+            factorOneButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+        }
+        if (requestCode == authentication_two_result && resultCode == Activity.RESULT_OK) {
+            val b = data.getBooleanExtra("result", false)
+            //  Set the button based on the result
+            factorTwoButton.isEnabled = false
+            factorTwoButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
+            factorTwoText.typeface = Typeface.DEFAULT_BOLD
+            factorTwoButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+        }
+        if (requestCode == authentication_three_result && resultCode == Activity.RESULT_OK) {
+            val b = data.getBooleanExtra("result", false)
+            //  Set the button based on the result
+            factorThreeButton.isEnabled = false
+            factorThreeButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
+            factorThreeText.typeface = Typeface.DEFAULT_BOLD
+            factorThreeButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+        }
+        // COUNTER
+        factorCounter++
+        if (factorCounter < 3) {
+            continueButton.text = "$factorCounter/3 Factors completed"
+        } else if (factorCounter == 3){
+            continueButton.text = "Authentication complete!"
+            continueButton.isEnabled = true
+            continueButton.setOnClickListener({
+                Log.i("PTAG", "Finished!")
+                finishedClick()
+            })
         }
     }
 
@@ -106,38 +143,48 @@ class FactorActivity : AppCompatActivity(), MainView {
         window.exitTransition = slide
     }
 
-    private fun fingerprintClick() {
+    fun onClick(v: View) {
+        val intent = Intent(this, AuthenticationLogActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun fingerprintClick(resultCode: Int) {
         val intent = Intent(this, FingerprintActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, resultCode)
     }
 
-    private fun qrClick() {
+    private fun qrClick(resultCode: Int) {
         val intent = Intent(this, QrActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, resultCode)
     }
 
-    private fun passwordClick() {
+    private fun passwordClick(resultCode: Int) {
         val intent = Intent(this, PasswordActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, resultCode)
     }
 
-    private fun blankClick() {
+    private fun blankClick(resultCode: Int) {
         val intent = Intent(this, BlankActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, resultCode)
     }
 
-    private fun locationClick() {
+    private fun locationClick(resultCode: Int) {
         val intent = Intent(this, LocationActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, resultCode)
     }
 
-    private fun voiceClick() {
+    private fun voiceClick(resultCode: Int) {
         val intent = Intent(this, VoiceActivity::class.java)
-        startActivity(intent)
+        startActivityForResult(intent, resultCode)
     }
 
-    private fun oneTimeClick() {
+    private fun oneTimeClick(resultCode: Int) {
         val intent = Intent(this, OneTimeActivity::class.java)
+        startActivityForResult(intent, resultCode)
+    }
+
+    private fun finishedClick(){
+        val intent = Intent(this, AuthenticationLogActivity::class.java)
         startActivity(intent)
     }
 }

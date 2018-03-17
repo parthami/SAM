@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SAM</string>
-    <string name="authTitle">Authentication</string>
+    <string name="authTitle">Factors</string>
     <string name="authSubTitle">These are the three factors</string>
     <string name="auth1">Authentication Factor 1</string>
     <string name="auth2">Authentication Factor 2</string>
@@ -24,4 +24,6 @@
     <string name="fingerprintStep2">Authentication succeeded</string>
     <string name="confirmFingerprint">Confirm fingerprint</string>
     <string name="touchSensor">Touch Sensor</string>
+    <string name="authenticationSuccess">Success</string>
+    <string name="authenticationFailure">Failure</string>
 </resources>

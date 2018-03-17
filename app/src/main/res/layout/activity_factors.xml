@@ -37,6 +37,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="64dp"
         android:text="@string/auth1"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
         android:transitionName="factorOneTextTrans"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -44,10 +45,11 @@
     <TextView
         android:id="@+id/factorTwoText"
         android:layout_width="wrap_content"
-        android:layout_height="17dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="144dp"
         android:text="@string/auth2"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/factorOneText" />
 
@@ -59,52 +61,71 @@
         android:layout_marginTop="144dp"
         android:text="@string/auth3"
         app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium"
         app:layout_constraintTop_toBottomOf="@+id/factorTwoText"
         android:transitionName="factorThreeTitleTrans"/>
 
     <Button
         android:id="@+id/factorOneButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="135dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:height="36dp"
-        android:background="@color/secondaryColor"
         android:elevation="2dp"
         android:enabled="true"
         android:gravity="center_vertical|center_horizontal"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="@string/toggleF"
+        android:text="Authenticate"
         app:layout_constraintBaseline_toBaselineOf="@+id/factorOneText"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/factorTwoButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="135dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/secondaryColor"
         android:elevation="2dp"
         android:gravity="center"
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
-        android:text="@string/toggleF"
+        android:text="Authenticate"
         app:layout_constraintBaseline_toBaselineOf="@+id/factorTwoText"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/factorThreeButton"
-        style="@style/Widget.AppCompat.Button"
-        android:layout_width="wrap_content"
-        android:layout_height="36dp"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="135dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="16dp"
-        android:background="@color/secondaryColor"
         android:elevation="2dp"
-        android:text="@string/toggleF"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:text="Authenticate"
         android:transitionName="factorThreeButtonTrans"
         app:layout_constraintBaseline_toBaselineOf="@+id/factorThreeText"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/continueButton"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="44dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:elevation="2dp"
+        android:enabled="false"
+        android:text="0/3 Factors completed "
+        android:textColor="@color/secondaryTextColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

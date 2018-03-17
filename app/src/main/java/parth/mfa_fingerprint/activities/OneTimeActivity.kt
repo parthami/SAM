@@ -1,5 +1,6 @@
 package parth.mfa_fingerprint.activities
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -44,11 +45,20 @@ class OneTimeActivity : AppCompatActivity() {
 
     fun check(v : View) {
         inputManager.hideSoftInputFromWindow(if (null == currentFocus) null else currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        if(editText.text.toString() == otp.toString()) {
+        val boolean = editText.text.toString() == otp.toString()
+        if(boolean) {
             Snackbar.make(constraintLayout2, "OTP verified!", Snackbar.LENGTH_SHORT).show()
         } else {
             Snackbar.make(constraintLayout2, "WRONG OTP!", Snackbar.LENGTH_SHORT).show()
         }
+        onResult(boolean)
+    }
+
+    fun onResult(boolean: Boolean) {
+        val intent = Intent()
+        intent.putExtra("result", boolean)
+        setResult(Activity.RESULT_OK, intent)
+        finishAfterTransition()
     }
 
 }
