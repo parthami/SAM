@@ -15,15 +15,12 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_password.*
-import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.PasswordInteractor
 import parth.mfa_fingerprint.interfaces.PasswordView
 import parth.mfa_fingerprint.presenters.PasswordPresenter
 import parth.mfa_fingerprint.room.AppDatabase
-import parth.mfa_fingerprint.room.AuthenticationNodeLog
 import parth.mfa_fingerprint.types.AuthenticationNode
-import java.util.*
 
 class PasswordActivity : AppCompatActivity(), PasswordView {
 
@@ -61,14 +58,14 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
         val boolean = presenter.comparePassword(passwordField.text)
         val log = if (boolean) {
             Snackbar.make(constraintLayout, "Password verified!", Snackbar.LENGTH_SHORT).show()
-            AuthenticationNodeLog(node.label, true, Date().time)
+//            AuthenticationNodeLog(node.label, true, Date().time)
         } else {
             Snackbar.make(constraintLayout, "Password incorrect", Snackbar.LENGTH_SHORT).show()
-            AuthenticationNodeLog(node.label, false,  Date().time)
+//            AuthenticationNodeLog(node.label, false,  Date().time)
         }
-        doAsync {
-            db.authenticationNodeLogDAO().insertLog(log)
-        }
+//        doAsync {
+//            db.authenticationNodeLogDAO().insertLog(log)
+//        }
         onResult(boolean)
     }
 

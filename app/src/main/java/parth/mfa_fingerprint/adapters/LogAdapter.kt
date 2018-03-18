@@ -34,18 +34,18 @@ class LogAdapter(var context: Context, private var logs: List<AuthenticationNode
         val log = logs[position]
 
         val label = holder?.labelView
-        label?.text = log.label
+        label?.text = "${log.label}, ${log.label2}, ${log.label3}"
 
         val time = holder?.timeView
         val date = Date(log.dateTime)
-        val sdf = SimpleDateFormat("dd-MM-yyyy hh:mm:s")
+        val sdf = SimpleDateFormat("dd-MM-yyyy | hh:mm:s")
         time?.text = sdf.format(date).toString()
 
         val cardIcon = holder?.cardIcon
 
-        if(!log.result){
-            cardIcon?.setTextColor(Color.parseColor("#c62828"))
-            cardIcon?.text = context.resources.getString(R.string.fa_times_circle)
+        if(log.result && log.result2 && log.result3){
+            cardIcon?.setTextColor(Color.parseColor("#4caf50"))
+            cardIcon?.text = context.resources.getString(R.string.fa_check_circle)
         }
 
         val iconFont = FontManager().getTypeface(context, FontManager().fa)

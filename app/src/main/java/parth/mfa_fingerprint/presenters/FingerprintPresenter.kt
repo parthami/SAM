@@ -6,12 +6,10 @@ import android.hardware.fingerprint.FingerprintManager
 import android.os.CancellationSignal
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.widget.Toast
-import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.activities.FingerprintActivity
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingeprintPresenterI
 import parth.mfa_fingerprint.room.AppDatabase
-import parth.mfa_fingerprint.room.AuthenticationNodeLog
 import parth.mfa_fingerprint.types.AuthenticationNode
 import java.io.IOException
 import java.security.InvalidKeyException
@@ -19,7 +17,6 @@ import java.security.KeyStoreException
 import java.security.NoSuchAlgorithmException
 import java.security.UnrecoverableKeyException
 import java.security.cert.CertificateException
-import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 
@@ -92,19 +89,19 @@ class FingerprintPresenter (private var fingerprintActivity: FingerprintActivity
 
         override fun onAuthenticationFailed() {
             Toast.makeText(context, "Authentication failed.", Toast.LENGTH_LONG).show()
-            val log = AuthenticationNodeLog(node.label, false, Date().time)
-            doAsync {
-                db.authenticationNodeLogDAO().insertLog(log)
-            }
+//            val log = AuthenticationNodeLog(node.label, false, Date().time)
+//            doAsync {
+//                db.authenticationNodeLogDAO().insertLog(log)
+//            }
             fingerprintActivity.onResult(false)
         }
 
         override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult) {
 //            Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
-            val log = AuthenticationNodeLog(node.label, true, Date().time)
-            doAsync {
-                db.authenticationNodeLogDAO().insertLog(log)
-            }
+//            val log = AuthenticationNodeLog(node.label, true, Date().time)
+//            doAsync {
+//                db.authenticationNodeLogDAO().insertLog(log)
+//            }
             fingerprintActivity.success()
 //            fingerprintActivity.onResult(true)
         }

@@ -1,6 +1,7 @@
 package parth.mfa_fingerprint.activities
 
 import android.app.Activity
+import android.arch.persistence.room.Room
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -11,9 +12,13 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_factors.*
+import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.MainView
+import parth.mfa_fingerprint.room.AppDatabase
+import parth.mfa_fingerprint.room.AuthenticationNodeLog
 import parth.mfa_fingerprint.types.AuthenticationNode
+import java.util.*
 
 class FactorActivity : AppCompatActivity(), MainView {
 
@@ -24,6 +29,8 @@ class FactorActivity : AppCompatActivity(), MainView {
     lateinit var factorTwo : AuthenticationNode
     lateinit var factorThree : AuthenticationNode
     private var factorCounter : Int = 0
+    private var db = Room.databaseBuilder(this, AppDatabase::class.java, "authenticationLogs").build()
+    private lateinit var authenticationLog: AuthenticationNodeLog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +62,8 @@ class FactorActivity : AppCompatActivity(), MainView {
         factorThreeButton.setOnClickListener({
             setFactorOnClick(factorThree.label,authentication_three_result)
         })
+
+        authenticationLog = AuthenticationNodeLog(factorOne.label,factorTwo.label,factorThree.label,false,false,false, Date().time)
     }
 
     private fun setFactorOnClick(s : String, resultCode: Int) {
@@ -105,6 +114,7 @@ class FactorActivity : AppCompatActivity(), MainView {
             factorOneButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
             factorOneText.typeface = Typeface.DEFAULT_BOLD
             factorOneButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+            authenticationLog.result = b
         }
         if (requestCode == authentication_two_result && resultCode == Activity.RESULT_OK) {
             val b = data.getBooleanExtra("result", false)
@@ -113,6 +123,7 @@ class FactorActivity : AppCompatActivity(), MainView {
             factorTwoButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
             factorTwoText.typeface = Typeface.DEFAULT_BOLD
             factorTwoButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+            authenticationLog.result2 = b
         }
         if (requestCode == authentication_three_result && resultCode == Activity.RESULT_OK) {
             val b = data.getBooleanExtra("result", false)
@@ -121,6 +132,7 @@ class FactorActivity : AppCompatActivity(), MainView {
             factorThreeButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
             factorThreeText.typeface = Typeface.DEFAULT_BOLD
             factorThreeButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+            authenticationLog.result3 = b
         }
         // COUNTER
         factorCounter++
@@ -185,6 +197,9 @@ class FactorActivity : AppCompatActivity(), MainView {
 
     private fun finishedClick(){
         val intent = Intent(this, AuthenticationLogActivity::class.java)
+        doAsync {
+            db.authenticationNodeLogDAO().insertLog(authenticationLog)
+        }
         startActivity(intent)
     }
 }

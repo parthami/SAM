@@ -15,7 +15,7 @@ object Generator {
     fun createExampleLogs(count: Int): ArrayList<AuthenticationNodeLog> {
         val logs = ArrayList<AuthenticationNodeLog>()
         for (i in 1..count) {
-            logs.add(AuthenticationNodeLog("Fingerprint", Random().nextBoolean(), Date().time))
+//            logs.add(AuthenticationNodeLog("Fingerprint", Random().nextBoolean(), Date().time))
         }
         return logs
     }
