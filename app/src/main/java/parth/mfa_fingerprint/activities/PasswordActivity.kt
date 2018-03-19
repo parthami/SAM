@@ -20,14 +20,12 @@ import parth.mfa_fingerprint.interactors.PasswordInteractor
 import parth.mfa_fingerprint.interfaces.PasswordView
 import parth.mfa_fingerprint.presenters.PasswordPresenter
 import parth.mfa_fingerprint.room.AppDatabase
-import parth.mfa_fingerprint.types.AuthenticationNode
 
 class PasswordActivity : AppCompatActivity(), PasswordView {
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var interactor: PasswordInteractor
     private lateinit var presenter: PasswordPresenter
-    private var node = AuthenticationNode.PASSWORD
     private var db = Room.databaseBuilder(this, AppDatabase::class.java, "authenticationLogs").build()
     lateinit var inputManager : InputMethodManager
 

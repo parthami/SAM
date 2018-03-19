@@ -6,14 +6,22 @@ package parth.mfa_fingerprint.types
 
 enum class AuthenticationNode(val label: String, val affectedBy : Enviroment, var probability: Double, var enabled : Boolean) {
     FINGERPRINT("Fingerprint",Enviroment.NONE, 0.14, true),
-    QR("QR",Enviroment.LIGHT, 0.14, true),
+    QR("QR",Enviroment.LIGHT, 0.14, false),
     PASSWORD("Password",Enviroment.NONE, 0.14, true),
     BLANK("Blank",Enviroment.SOUND, 0.14, true),
     LOCATION("Location", Enviroment.NONE, 0.14, true),
     VOICE("Voice", Enviroment.SOUND, 0.14, true),
-    ONETIME("OneTime", Enviroment.NONE, 0.14, true)
+    ONETIME("OneTime", Enviroment.NONE, 0.14, true);
+
+    companion object {
+        fun changeProbability(aNode: AuthenticationNode, p: Double) {
+            aNode.probability = p
+        }
+
+        fun setEnabled(a: AuthenticationNode, b : Boolean) {
+            a.enabled = b
+        }
+    }
 }
 
-fun changeProbability(aNode : AuthenticationNode , p : Double) {
-    aNode.probability = p
-}
+

@@ -38,13 +38,21 @@ class SelectionActivity : AppCompatActivity() {
         authButton.isEnabled = false
         authButton.setBackgroundColor(Color.GRAY)
 
-        val passwordPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        LIGHT_LOW_LIMIT = passwordPreferences.getString("pref_key_light_lower", "0").toInt()
-        LIGHT_HIGH_LIMIT = passwordPreferences.getString("pref_key_light_higher", "100").toInt()
-        SOUND_LOW_LIMIT = passwordPreferences.getString("pref_key_sound_lower", "0").toInt()
-        SOUND_HIGH_LIMIT = passwordPreferences.getString("pref_key_sound_higher", "100").toInt()
-        MOTION_LOW_LIMIT = passwordPreferences.getString("pref_key_motion_lower", "0").toInt()
-        MOTION_HIGH_LIMIT = passwordPreferences.getString("pref_key_motion_higher", "100").toInt()
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        //LIMITS
+        LIGHT_LOW_LIMIT = preferences.getString("pref_key_light_lower", "0").toInt()
+        LIGHT_HIGH_LIMIT = preferences.getString("pref_key_light_higher", "100").toInt()
+        SOUND_LOW_LIMIT = preferences.getString("pref_key_sound_lower", "0").toInt()
+        SOUND_HIGH_LIMIT = preferences.getString("pref_key_sound_higher", "100").toInt()
+        MOTION_LOW_LIMIT = preferences.getString("pref_key_motion_lower", "0").toInt()
+        MOTION_HIGH_LIMIT = preferences.getString("pref_key_motion_higher", "100").toInt()
+        // Disabled
+        AuthenticationNode.setEnabled(AuthenticationNode.PASSWORD, preferences.getBoolean("password_switch", true))
+        AuthenticationNode.setEnabled(AuthenticationNode.QR, preferences.getBoolean("qr_switch", true))
+        AuthenticationNode.setEnabled(AuthenticationNode.FINGERPRINT, preferences.getBoolean("fingerprint_switch", true))
+        AuthenticationNode.setEnabled(AuthenticationNode.ONETIME, preferences.getBoolean("one_time_switch", true))
+        AuthenticationNode.setEnabled(AuthenticationNode.VOICE, preferences.getBoolean("voice_switch", true))
+        AuthenticationNode.setEnabled(AuthenticationNode.LOCATION, preferences.getBoolean("location_switch", true))
 
         selection()
     }

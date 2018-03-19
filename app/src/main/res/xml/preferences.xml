@@ -1,22 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+    <PreferenceScreen
+        android:key="pref_key_environment"
+        android:persistent="false"
+        android:title="Environment">
+
+        <PreferenceCategory
+            android:key="pref_key_light"
+            android:title="Light">
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:key="pref_key_light_lower"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="Light lower limit" />
+
+            <EditTextPreference
+                android:defaultValue="100"
+                android:key="pref_key_light_higher"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="Light higher limit" />
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:key="pref_key_motion"
+            android:title="Motion">
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:key="pref_key_motion_lower"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="Motion lower limit" />
+
+            <EditTextPreference
+                android:defaultValue="100"
+                android:key="pref_key_motion_higher"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="Motion higher limit" />
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            android:key="pref_key_sound"
+            android:title="Sound">
+
+            <EditTextPreference
+                android:defaultValue="0"
+                android:key="pref_key_motion_lower"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="Sound lower limit" />
+
+            <EditTextPreference
+                android:defaultValue="100"
+                android:key="pref_key_motion_higher"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:title="Sound higher limit" />
+        </PreferenceCategory>
+    </PreferenceScreen>
+
     <PreferenceCategory
         android:key="pref_key_password"
         android:title="Password">
-
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="password_switch"
+            android:title="Enabled"/>
         <EditTextPreference
             android:defaultValue="password"
             android:key="pref_key_password"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="Change your password" />
+            android:title="Change your password"/>
     </PreferenceCategory>
 
     <PreferenceCategory
         android:key="pref_key_qr"
         android:title="QR Code">
-
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="qr_switch"
+            android:title="Enabled"/>
         <EditTextPreference
             android:defaultValue="Default value"
             android:key="pref_key_qr"
@@ -28,7 +98,10 @@
     <PreferenceCategory
         android:key="pref_key_fingerprint"
         android:title="Fingerprint">
-
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="fingerprint_switch"
+            android:title="Enabled"/>
         <EditTextPreference
             android:defaultValue="Default value"
             android:key="pref_key_fingerprint"
@@ -38,60 +111,30 @@
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="pref_key_light"
-        android:title="Light">
-
-        <EditTextPreference
-            android:defaultValue="0"
-            android:key="pref_key_light_lower"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Light lower limit" />
-
-        <EditTextPreference
-            android:defaultValue="100"
-            android:key="pref_key_light_higher"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Light higher limit" />
+        android:key="pref_key_onetime"
+        android:title="OneTime">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="one_time_switch"
+            android:title="Enabled"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="pref_key_motion"
-        android:title="Motion">
-
-        <EditTextPreference
-            android:defaultValue="0"
-            android:key="pref_key_motion_lower"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Motion lower limit" />
-
-        <EditTextPreference
-            android:defaultValue="100"
-            android:key="pref_key_motion_higher"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Motion higher limit" />
+        android:key="pref_key_voice"
+        android:title="Voice">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="voice_switch"
+            android:title="Enabled"/>
     </PreferenceCategory>
 
     <PreferenceCategory
-        android:key="pref_key_sound"
-        android:title="Sound">
-
-        <EditTextPreference
-            android:defaultValue="0"
-            android:key="pref_key_motion_lower"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Sound lower limit" />
-
-        <EditTextPreference
-            android:defaultValue="100"
-            android:key="pref_key_motion_higher"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Sound higher limit" />
+        android:key="pref_key_location"
+        android:title="Location">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="Location_switch"
+            android:title="Enabled"/>
     </PreferenceCategory>
 
 </PreferenceScreen>
