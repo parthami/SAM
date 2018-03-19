@@ -25,10 +25,10 @@ class FactorActivity : AppCompatActivity(), MainView {
     private val authentication_one_result = 0
     private val authentication_two_result = 1
     private val authentication_three_result = 2
-    lateinit var factorOne : AuthenticationNode
-    lateinit var factorTwo : AuthenticationNode
-    lateinit var factorThree : AuthenticationNode
-    private var factorCounter : Int = 0
+    lateinit var factorOne: AuthenticationNode
+    lateinit var factorTwo: AuthenticationNode
+    lateinit var factorThree: AuthenticationNode
+    private var factorCounter: Int = 0
     private var db = Room.databaseBuilder(this, AppDatabase::class.java, "authenticationLogs").build()
     private lateinit var authenticationLog: AuthenticationNodeLog
 
@@ -54,20 +54,20 @@ class FactorActivity : AppCompatActivity(), MainView {
         factorThreeText.text = factorThree.label
         //Set on clicks
         factorOneButton.setOnClickListener({
-            setFactorOnClick(factorOne.label,authentication_one_result)
+            setFactorOnClick(factorOne.label, authentication_one_result)
         })
         factorTwoButton.setOnClickListener({
-            setFactorOnClick(factorTwo.label,authentication_two_result)
+            setFactorOnClick(factorTwo.label, authentication_two_result)
         })
         factorThreeButton.setOnClickListener({
-            setFactorOnClick(factorThree.label,authentication_three_result)
+            setFactorOnClick(factorThree.label, authentication_three_result)
         })
 
-        authenticationLog = AuthenticationNodeLog(factorOne.label,factorTwo.label,factorThree.label,false,false,false, Date().time)
+        authenticationLog = AuthenticationNodeLog(factorOne.label, factorTwo.label, factorThree.label, false, false, false, Date().time)
     }
 
-    private fun setFactorOnClick(s : String, resultCode: Int) {
-        when(s) {
+    private fun setFactorOnClick(s: String, resultCode: Int) {
+        when (s) {
             AuthenticationNode.FINGERPRINT.label -> {
                 return fingerprintClick(resultCode)
             }
@@ -106,45 +106,47 @@ class FactorActivity : AppCompatActivity(), MainView {
 //        startActivity(intent)
 //    }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
-        if (requestCode == authentication_one_result && resultCode == Activity.RESULT_OK) {
-            val b = data.getBooleanExtra("result", false)
-            //  Set the button based on the result
-            factorOneButton.isEnabled = false
-            factorOneButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
-            factorOneText.typeface = Typeface.DEFAULT_BOLD
-            factorOneButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
-            authenticationLog.result = b
-        }
-        if (requestCode == authentication_two_result && resultCode == Activity.RESULT_OK) {
-            val b = data.getBooleanExtra("result", false)
-            //  Set the button based on the result
-            factorTwoButton.isEnabled = false
-            factorTwoButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
-            factorTwoText.typeface = Typeface.DEFAULT_BOLD
-            factorTwoButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
-            authenticationLog.result2 = b
-        }
-        if (requestCode == authentication_three_result && resultCode == Activity.RESULT_OK) {
-            val b = data.getBooleanExtra("result", false)
-            //  Set the button based on the result
-            factorThreeButton.isEnabled = false
-            factorThreeButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
-            factorThreeText.typeface = Typeface.DEFAULT_BOLD
-            factorThreeButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
-            authenticationLog.result3 = b
-        }
-        // COUNTER
-        factorCounter++
-        if (factorCounter < 3) {
-            continueButton.text = "$factorCounter/3 Factors completed"
-        } else if (factorCounter == 3){
-            continueButton.text = "Authentication complete!"
-            continueButton.isEnabled = true
-            continueButton.setOnClickListener({
-                Log.i("PTAG", "Finished!")
-                finishedClick()
-            })
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode != Activity.RESULT_CANCELED || data == null) {
+            if (requestCode == authentication_one_result && resultCode == Activity.RESULT_OK) {
+                val b = data!!.getBooleanExtra("result", false)
+                //  Set the button based on the result
+                factorOneButton.isEnabled = false
+                factorOneButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
+                factorOneText.typeface = Typeface.DEFAULT_BOLD
+                factorOneButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+                authenticationLog.result = b
+            }
+            if (requestCode == authentication_two_result && resultCode == Activity.RESULT_OK) {
+                val b = data!!.getBooleanExtra("result", false)
+                //  Set the button based on the result
+                factorTwoButton.isEnabled = false
+                factorTwoButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
+                factorTwoText.typeface = Typeface.DEFAULT_BOLD
+                factorTwoButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+                authenticationLog.result2 = b
+            }
+            if (requestCode == authentication_three_result && resultCode == Activity.RESULT_OK) {
+                val b = data!!.getBooleanExtra("result", false)
+                //  Set the button based on the result
+                factorThreeButton.isEnabled = false
+                factorThreeButton.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
+                factorThreeText.typeface = Typeface.DEFAULT_BOLD
+                factorThreeButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
+                authenticationLog.result3 = b
+            }
+            // COUNTER
+            factorCounter++
+            if (factorCounter < 3) {
+                continueButton.text = "$factorCounter/3 Factors completed"
+            } else if (factorCounter == 3) {
+                continueButton.text = "Authentication complete!"
+                continueButton.isEnabled = true
+                continueButton.setOnClickListener({
+                    Log.i("PTAG", "Finished!")
+                    finishedClick()
+                })
+            }
         }
     }
 
@@ -195,7 +197,7 @@ class FactorActivity : AppCompatActivity(), MainView {
         startActivityForResult(intent, resultCode)
     }
 
-    private fun finishedClick(){
+    private fun finishedClick() {
         val intent = Intent(this, AuthenticationLogActivity::class.java)
         doAsync {
             db.authenticationNodeLogDAO().insertLog(authenticationLog)

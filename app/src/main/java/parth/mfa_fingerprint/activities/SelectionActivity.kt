@@ -2,6 +2,7 @@ package parth.mfa_fingerprint.activities
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -77,47 +78,52 @@ class SelectionActivity : AppCompatActivity() {
             allFactorList.filter { it.affectedBy == Enviroment.SOUND }.map { it.enabled = false }
             Log.i("PTAG", "SOUND disabled")
         }
-        // Convert to arraylist of strings
+
         var enableCounter = 0
-        for (i in 0..allFactorList.lastIndex) {
-            val textView = TextView(this)
-            textView.text = allFactorList[i].label
-            textView.textAlignment = View.TEXT_ALIGNMENT_CENTER
-            textView.textSize = 30.0f
-            if (!allFactorList[i].enabled) {
-                textView.setTextColor(Color.RED)
-                disabledFactors.addView(textView)
-            } else {
-                textView.setTextColor(ContextCompat.getColor(this, R.color.secondaryColor))
-                enabledFactors.addView(textView)
-                enableCounter++
+
+        val eTitle = getLabelTextView("Enabled factors", Color.GRAY)
+        eTitle.setTextAppearance(Typeface.BOLD)
+        factorList.addView(eTitle)
+
+        allFactorList.filter { it.enabled }.map {
+            factorList.addView(getLabelTextView(it.label, ContextCompat.getColor(this, R.color.secondaryColor)))
+            enableCounter++
+        }
+        val containsDisabled = allFactorList.any { !it.enabled }
+        if (containsDisabled) {
+            val spacer = getLabelTextView("", Color.WHITE)
+            factorList.addView(spacer)
+            val title = getLabelTextView("Disabled Factors", Color.GRAY)
+            title.setTextAppearance(Typeface.BOLD)
+            factorList.addView(title)
+            allFactorList.filter { !it.enabled }.map {
+                factorList.addView(getLabelTextView(it.label, Color.RED))
             }
         }
+        // Check if enough factors have been enabled
         if (enableCounter > 2) {
             authButton.isEnabled = true
             authButton.setBackgroundColor(ContextCompat.getColor(this, R.color.secondaryColor))
         }
-        // Send the remaining enabled factors to the list as Strings
-
     }
 
     fun sendToList(v: View) {
         val intent = Intent(this, FactorActivity::class.java)
-        val enabledFactors : ArrayList<AuthenticationNode> = ArrayList(0)
-        val probabilities : ArrayList<Double> = ArrayList(0)
-        val factors : ArrayList<String>
+        val enabledFactors: ArrayList<AuthenticationNode> = ArrayList(0)
+        val probabilities: ArrayList<Double> = ArrayList(0)
+        val factors: ArrayList<String>
         // Filter labels and probabilities
         allFactorList.filter { it.enabled }.map { enabledFactors.add(it) }
         enabledFactors.filter { probabilities.add(it.probability) }
-        factors = getThreeFactors(enabledFactors,probabilities)
+        factors = getThreeFactors(enabledFactors, probabilities)
         // Send to intent
         intent.putStringArrayListExtra("factors", factors)
         Log.i("PTAG", "Sending $factors")
         startActivity(intent)
     }
 
-    fun getThreeFactors(factors :  ArrayList<AuthenticationNode>, probabilities: ArrayList<Double> ) : ArrayList<String> {
-        val chosenFactors : ArrayList<String> = ArrayList(3)
+    fun getThreeFactors(factors: ArrayList<AuthenticationNode>, probabilities: ArrayList<Double>): ArrayList<String> {
+        val chosenFactors: ArrayList<String> = ArrayList(3)
         // Factor 1
         var alias = AliasMethod(probabilities)
         val f1 = alias.generation()
@@ -143,5 +149,14 @@ class SelectionActivity : AppCompatActivity() {
             g.add(it.toString())
         }
         return g
+    }
+
+    private fun getLabelTextView(label: String, color: Int): TextView {
+        val factorLabel = TextView(this)
+        factorLabel.text = label
+        factorLabel.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        factorLabel.textSize = 30.0f
+        factorLabel.setTextColor(color)
+        return factorLabel
     }
 }
