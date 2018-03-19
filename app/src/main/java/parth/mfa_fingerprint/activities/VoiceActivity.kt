@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import kotlinx.android.synthetic.main.activity_voice.*
 import parth.mfa_fingerprint.R
 
 class VoiceActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class VoiceActivity : AppCompatActivity() {
     }
 
     fun onClick(v: View) {
-        onResult(true)
+        if(v.id == voiceSuccessButton.id) onResult(true) else onResult(false)
     }
 
     fun onResult(boolean: Boolean) {
