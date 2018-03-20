@@ -22,7 +22,7 @@ class PasswordPresenter(val view: PasswordView, private val interactor: Password
     private val keyLength = 256
     private val saltLength = keyLength / 8
     private val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
-    val keyFactory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1")
+    private val keyFactory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1")
 
     override fun hashPassword(passwordToEncrypt: String) {
         val random = SecureRandom()
@@ -36,13 +36,6 @@ class PasswordPresenter(val view: PasswordView, private val interactor: Password
         // Create the password hash
         val encryptedPassword = hashGeneration(passwordToEncrypt, salt, ivParams)
         savePassword(encryptedPassword, salt, iv)
-        // Print
-//        val a = Base64.encodeBytes(encryptedPassword)
-//        val b = Base64.encodeBytes(salt)
-//        val c = Base64.encodeBytes(iv)
-//        Log.i("PTAG", "encryptedPasswordH - $a")
-//        Log.i("PTAG", "saltH - $b")
-//        Log.i("PTAG", "ivH - $c")
     }
 
     override fun savePassword(encryptedPassword: ByteArray, salt: ByteArray, iv: ByteArray) {
@@ -57,19 +50,11 @@ class PasswordPresenter(val view: PasswordView, private val interactor: Password
         val salt = Base64.decode(passwordItems[1])
         val iv = Base64.decode(passwordItems[2])
 
-//        Log.i("PTAG", "comparePassword: encryptedPassword - $e")
-//        Log.i("PTAG", "comparePassword: salt- $f")
-//        Log.i("PTAG", "comparePassword: iv - $j")
-
         val ivParams = IvParameterSpec(iv)
         val encryptedPassword = hashGeneration(passwordToCheck, salt, ivParams)
-//        Log.i("PTAG", "comparePassword: encryptedPassword - $encryptedPassword")
-
-//        val encryptedPasswordAsString = Base64.encodeBytes(encryptedPassword)
-//        Log.i("PTAG", "Comparing strings - ${encryptedPasswordAsString == e}")
-        Log.i("PTAG", "Comparing hashes  - ${encryptedPassword.contentEquals(savedPassword)}")
-
-        return encryptedPassword.contentEquals(savedPassword)
+        val check = encryptedPassword.contentEquals(savedPassword)
+        Log.i("PTAG", "Comparing hashes  - $check")
+        return check
     }
 
     private fun hashGeneration(passwordToEncrypt: String, salt: ByteArray, ivParams: IvParameterSpec): ByteArray {

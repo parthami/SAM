@@ -40,20 +40,6 @@ class AuthenticationLogActivity : AppCompatActivity() {
 
         logRecycler.layoutManager = LinearLayoutManager(this)
 
-//        val encodingExample = byteArrayOf(1,2,3,4,5)
-//        Log.i("PTAG",encodingExample.toString())
-//        val encodedExample = Base64.encodeBytes(encodingExample)
-//        Log.i("PTAG",encodedExample.toString())
-//        val decodedExample = Base64.decode(encodedExample)
-//        Log.i("PTAG",decodedExample.toString())
-//        Log.i("PTAG",(encodingExample.contentEquals(decodedExample)).toString())
-//
-//        var string = "parth"
-//        var stringToCharArray = string.toCharArray()
-//        val stringToCharArrayToString = stringToCharArray.toString()
-//        val bool = string == stringToCharArrayToString
-//        Log.i("PTAG","Str comp $bool")
-
 //        val input = doubleArrayOf(0.125,0.20,0.1,0.25,0.1,0.1,0.125)
 //        val alias = AliasMethod(input)
 //        val output = alias.generation()
