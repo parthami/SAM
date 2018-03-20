@@ -18,82 +18,66 @@ import javax.crypto.spec.SecretKeySpec
  */
 class PasswordPresenter(val view: PasswordView, private val interactor: PasswordInteractor) : PasswordPresenterI {
 
-    private lateinit var passwordToEncrypt: CharArray
-    private lateinit var passwordToCheck: CharArray
     private val iterationCount = 1000
     private val keyLength = 256
     private val saltLength = keyLength / 8
+    private val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+    val keyFactory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1")
 
-    override fun hashPassword(passwordToEncrypt: CharArray)  {
-//        passwordToEncrypt = editable.toString().toCharArray()
+    override fun hashPassword(passwordToEncrypt: String) {
         val random = SecureRandom()
-        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         // Generate the salt
         val salt = ByteArray(saltLength)
         random.nextBytes(salt)
-        //  Generate  PBEKey instance and a key
-        val keySpec = PBEKeySpec(passwordToEncrypt, salt, iterationCount, keyLength)
-        val keyFactory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1")
-        val keyBytes = keyFactory.generateSecret(keySpec).encoded
-        val key = SecretKeySpec(keyBytes, "AES")
         // Generate IV
         val iv = ByteArray(cipher.blockSize)
         random.nextBytes(iv)
         val ivParams = IvParameterSpec(iv)
-        // Initiate the cipher
-        cipher.init(Cipher.ENCRYPT_MODE, key, ivParams)
-        val encryptedPassword = cipher.doFinal(passwordToEncrypt.toString().toByteArray())
-        savePassword(encryptedPassword,salt, iv)
-//        Log.i("PTAG","encryptedPassword - $encryptedPassword")
-//        Log.i("PTAG","salt - $salt")
-//        Log.i("PTAG","iv - $iv")
-        val a = Base64.encodeBytes(encryptedPassword)
-        val b = Base64.encodeBytes(salt)
-        val c = Base64.encodeBytes(iv)
-        Log.i("PTAG","encryptedPasswordH - $a")
-        Log.i("PTAG","saltH - $b")
-        Log.i("PTAG","ivH - $c")
+        // Create the password hash
+        val encryptedPassword = hashGeneration(passwordToEncrypt, salt, ivParams)
+        savePassword(encryptedPassword, salt, iv)
+        // Print
+//        val a = Base64.encodeBytes(encryptedPassword)
+//        val b = Base64.encodeBytes(salt)
+//        val c = Base64.encodeBytes(iv)
+//        Log.i("PTAG", "encryptedPasswordH - $a")
+//        Log.i("PTAG", "saltH - $b")
+//        Log.i("PTAG", "ivH - $c")
     }
 
     override fun savePassword(encryptedPassword: ByteArray, salt: ByteArray, iv: ByteArray) {
-        interactor.savePassword(encryptedPassword, salt,iv)
+        interactor.savePassword(encryptedPassword, salt, iv)
     }
 
     override fun comparePassword(editable: Editable): Boolean {
-        passwordToCheck = editable.toString().toCharArray()
+        val passwordToCheck = editable.toString()
         // Load password items
         val passwordItems: Array<String> = interactor.loadPassword()
-        val e = passwordItems[0]
-        val f = passwordItems[1]
-        val j = passwordItems[2]
-        val encryptedPasswordHash = Base64.decode(e)
-        val salt = Base64.decode(f)
-        val iv = Base64.decode(j)
+        val savedPassword = Base64.decode(passwordItems[0])
+        val salt = Base64.decode(passwordItems[1])
+        val iv = Base64.decode(passwordItems[2])
 
-        Log.i("PTAG","encryptedPasswordHash - $e")
-        Log.i("PTAG","saltHash - $f")
-        Log.i("PTAG","ivHash - $j")
-
-//        Log.i("PTAG","encryptedPassword - $encryptedPasswordHash")
-//        Log.i("PTAG","salt - $salt")
-//        Log.i("PTAG","iv - $iv")
+//        Log.i("PTAG", "comparePassword: encryptedPassword - $e")
+//        Log.i("PTAG", "comparePassword: salt- $f")
+//        Log.i("PTAG", "comparePassword: iv - $j")
 
         val ivParams = IvParameterSpec(iv)
-        val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
+        val encryptedPassword = hashGeneration(passwordToCheck, salt, ivParams)
+//        Log.i("PTAG", "comparePassword: encryptedPassword - $encryptedPassword")
 
-        val keySpec = PBEKeySpec(passwordToCheck, salt, iterationCount, keyLength)
-        val keyFactory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1")
+//        val encryptedPasswordAsString = Base64.encodeBytes(encryptedPassword)
+//        Log.i("PTAG", "Comparing strings - ${encryptedPasswordAsString == e}")
+        Log.i("PTAG", "Comparing hashes  - ${encryptedPassword.contentEquals(savedPassword)}")
+
+        return encryptedPassword.contentEquals(savedPassword)
+    }
+
+    private fun hashGeneration(passwordToEncrypt: String, salt: ByteArray, ivParams: IvParameterSpec): ByteArray {
+        //  Generate  PBEKey instance and a key
+        val keySpec = PBEKeySpec(passwordToEncrypt.toCharArray(), salt, iterationCount, keyLength)
         val keyBytes = keyFactory.generateSecret(keySpec).encoded
         val key = SecretKeySpec(keyBytes, "AES")
-
         cipher.init(Cipher.ENCRYPT_MODE, key, ivParams)
-        val g = passwordToCheck.toString().toByteArray()
-        val passwordToCheckHash = cipher.doFinal(g)
-//        Log.i("PTAG","passwordToCheck - $g")
-
-        val passwordToCheck = Base64.encodeBytes(passwordToCheckHash)
-        Log.i("PTAG","passwordToCheck - $passwordToCheck")
-
-        return passwordToCheck.contentEquals(e)
+        return cipher.doFinal(passwordToEncrypt.toByteArray())
     }
 }

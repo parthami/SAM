@@ -46,7 +46,7 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
         interactor = PasswordInteractor(sharedPreferences)
         presenter = PasswordPresenter(this, interactor)
 
-        presenter.hashPassword(savedPassword.toCharArray())
+        presenter.hashPassword(savedPassword)
     }
 
     override fun checkClick(view: View) {
