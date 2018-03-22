@@ -66,7 +66,7 @@ class FactorActivity : AppCompatActivity(), MainView {
         authenticationLog = AuthenticationNodeLog(factorOne.label, factorTwo.label, factorThree.label, false, false, false, Date().time)
     }
 
-    private fun setFactorOnClick(s: String, resultCode: Int) {
+    fun setFactorOnClick(s: String, resultCode: Int) {
         when (s) {
             AuthenticationNode.FINGERPRINT.label -> {
                 return fingerprintClick(resultCode)
@@ -162,7 +162,7 @@ class FactorActivity : AppCompatActivity(), MainView {
         startActivity(intent)
     }
 
-    private fun fingerprintClick(resultCode: Int) {
+    fun fingerprintClick(resultCode: Int) {
         val intent = Intent(this, FingerprintActivity::class.java)
         startActivityForResult(intent, resultCode)
     }

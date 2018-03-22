@@ -38,7 +38,6 @@ class QrActivity : AppCompatActivity(), QrView {
 
         interactor = QrInteractor()
         presenter = QrPresenter(this, interactor)
-//        createMAC()
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         val regenerateKey = preferences.getBoolean("qr_generate_key", false)

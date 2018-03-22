@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceManager
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_selection.*
 import parth.mfa_fingerprint.R
@@ -19,16 +20,17 @@ import parth.mfa_fingerprint.types.Enviroment
 
 class SelectionActivity : AppCompatActivity() {
 
-    var SOUND_LOW_LIMIT = 0
-    var SOUND_HIGH_LIMIT = 100
-    var LIGHT_LOW_LIMIT = 0
-    var LIGHT_HIGH_LIMIT = 100
-    var MOTION_LOW_LIMIT = 0
-    var MOTION_HIGH_LIMIT = 100
+    var SOUND_LOW_LIMIT = 0.0
+    var SOUND_HIGH_LIMIT = 100.0
+    var LIGHT_LOW_LIMIT = 0.0
+    var LIGHT_HIGH_LIMIT = 100.0
+    var MOTION_LOW_LIMIT = 0.0
+    var MOTION_HIGH_LIMIT = 100.0
     var lightLevel: Double = 0.0
     var motionLevel: Double = 0.0
     var soundLevel: Double = 0.0
-    val allFactorList = AuthenticationNode.values()
+    var enableCounter = 0
+    private val allFactorList = AuthenticationNode.values()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +42,12 @@ class SelectionActivity : AppCompatActivity() {
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
         //LIMITS
-        LIGHT_LOW_LIMIT = preferences.getString("pref_key_light_lower", "0").toInt()
-        LIGHT_HIGH_LIMIT = preferences.getString("pref_key_light_higher", "100").toInt()
-        SOUND_LOW_LIMIT = preferences.getString("pref_key_sound_lower", "0").toInt()
-        SOUND_HIGH_LIMIT = preferences.getString("pref_key_sound_higher", "100").toInt()
-        MOTION_LOW_LIMIT = preferences.getString("pref_key_motion_lower", "0").toInt()
-        MOTION_HIGH_LIMIT = preferences.getString("pref_key_motion_higher", "100").toInt()
+        LIGHT_LOW_LIMIT = preferences.getString("pref_key_light_lower", "0").toDouble()
+        LIGHT_HIGH_LIMIT = preferences.getString("pref_key_light_higher", "100").toDouble()
+        SOUND_LOW_LIMIT = preferences.getString("pref_key_sound_lower", "0").toDouble()
+        SOUND_HIGH_LIMIT = preferences.getString("pref_key_sound_higher", "100").toDouble()
+        MOTION_LOW_LIMIT = preferences.getString("pref_key_motion_lower", "0").toDouble()
+        MOTION_HIGH_LIMIT = preferences.getString("pref_key_motion_higher", "100").toDouble()
         // Disabled
         AuthenticationNode.setEnabled(AuthenticationNode.PASSWORD, preferences.getBoolean("password_switch", true))
         AuthenticationNode.setEnabled(AuthenticationNode.QR, preferences.getBoolean("qr_switch", true))
@@ -68,12 +70,11 @@ class SelectionActivity : AppCompatActivity() {
         soundLevel = value[2]
         Log.i("PTAG", "Sensor values: $lightLevel $motionLevel $soundLevel")
         // Calculate if values are in range
-        val lightInRange = lightLevel in (LIGHT_LOW_LIMIT)..(LIGHT_HIGH_LIMIT)
-        val motionInRange = motionLevel in (MOTION_LOW_LIMIT)..(MOTION_HIGH_LIMIT)
-        val soundInRange = soundLevel in (SOUND_LOW_LIMIT)..(SOUND_HIGH_LIMIT)
+        val lightInRange = inLimitRange(lightLevel, LIGHT_LOW_LIMIT, LIGHT_HIGH_LIMIT)
+        val motionInRange = inLimitRange(motionLevel, MOTION_LOW_LIMIT, MOTION_HIGH_LIMIT)
+        val soundInRange = inLimitRange(soundLevel, SOUND_LOW_LIMIT, SOUND_HIGH_LIMIT)
         Log.i("PTAG", "Range values: $lightInRange $motionInRange $soundInRange")
         // Disable factors
-
         if (!lightInRange) {
             allFactorList.filter { it.affectedBy == Enviroment.LIGHT }.map { it.enabled = false }
             Log.i("PTAG", "LIGHT disabled")
@@ -87,16 +88,11 @@ class SelectionActivity : AppCompatActivity() {
             Log.i("PTAG", "SOUND disabled")
         }
 
-        var enableCounter = 0
-
         val eTitle = getLabelTextView("Enabled factors", Color.GRAY)
         eTitle.setTextAppearance(Typeface.BOLD)
         factorList.addView(eTitle)
 
-        allFactorList.filter { it.enabled }.map {
-            factorList.addView(getLabelTextView(it.label, ContextCompat.getColor(this, R.color.secondaryColor)))
-            enableCounter++
-        }
+        addLabelsToList(allFactorList, factorList, true)
         val containsDisabled = allFactorList.any { !it.enabled }
         if (containsDisabled) {
             val spacer = getLabelTextView("", Color.WHITE)
@@ -104,14 +100,25 @@ class SelectionActivity : AppCompatActivity() {
             val title = getLabelTextView("Disabled Factors", Color.GRAY)
             title.setTextAppearance(Typeface.BOLD)
             factorList.addView(title)
-            allFactorList.filter { !it.enabled }.map {
-                factorList.addView(getLabelTextView(it.label, Color.RED))
-            }
+            addLabelsToList(allFactorList,factorList, false)
         }
         // Check if enough factors have been enabled
         if (enableCounter > 2) {
             authButton.isEnabled = true
             authButton.setBackgroundColor(ContextCompat.getColor(this, R.color.secondaryColor))
+        }
+    }
+
+    fun addLabelsToList(list : Array<AuthenticationNode>, layout: LinearLayout, enabled : Boolean) {
+        if(enabled) {
+            list.filter { it.enabled }.map {
+                layout.addView(getLabelTextView(it.label, ContextCompat.getColor(this, R.color.secondaryColor)))
+                enableCounter++
+            }
+        } else {
+            list.filter { !it.enabled }.map {
+                layout.addView(getLabelTextView(it.label, Color.RED))
+            }
         }
     }
 
@@ -157,6 +164,10 @@ class SelectionActivity : AppCompatActivity() {
             g.add(it.toString())
         }
         return g
+    }
+
+    fun inLimitRange(value: Double, lowerLimit: Double, higherLimit: Double): Boolean {
+        return value in (lowerLimit)..(higherLimit)
     }
 
     private fun getLabelTextView(label: String, color: Int): TextView {

@@ -57,6 +57,8 @@ class PasswordPresenter(val view: PasswordView, private val interactor: Password
         return check
     }
 
+    fun hashComparsion(hash1 : String ) {}
+
     private fun hashGeneration(passwordToEncrypt: String, salt: ByteArray, ivParams: IvParameterSpec): ByteArray {
         //  Generate  PBEKey instance and a key
         val keySpec = PBEKeySpec(passwordToEncrypt.toCharArray(), salt, iterationCount, keyLength)
