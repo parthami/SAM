@@ -87,12 +87,10 @@
             android:defaultValue="true"
             android:key="qr_switch"
             android:title="Enabled"/>
-        <EditTextPreference
-            android:defaultValue="Default value"
-            android:key="pref_key_qr"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:title="Generate new key" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="qr_generate_key"
+            android:title="Generate a new key" />
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -138,6 +136,15 @@
         <SwitchPreference
             android:defaultValue="true"
             android:key="Location_switch"
+            android:title="Enabled"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="pref_key_blank"
+        android:title="Blank">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="blank_switch"
             android:title="Enabled"/>
     </PreferenceCategory>
 

@@ -21,7 +21,7 @@ class OneTimePresenter(private val activity: OneTimeActivity, private val intera
         i.type = "message/rfc822"
         i.putExtra(Intent.EXTRA_EMAIL, arrayOf("chandratreya.parth@gmail.com"))
         i.putExtra(Intent.EXTRA_SUBJECT, "SAM OTP")
-        i.putExtra(Intent.EXTRA_TEXT, "$otp")
+        i.putExtra(Intent.EXTRA_TEXT, "The generated OTP is $otp")
         try {
             startActivity(context,Intent.createChooser(i, "Send mail..."),null)
         } catch (ex: android.content.ActivityNotFoundException) {

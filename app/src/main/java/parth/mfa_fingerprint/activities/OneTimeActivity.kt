@@ -45,7 +45,7 @@ class OneTimeActivity : AppCompatActivity(), OneTimeView {
 
     fun check(v: View) {
         inputManager.hideSoftInputFromWindow(if (null == currentFocus) null else currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        val bool = presenter.checkPassword(oneTimeCheckEditText.toString())
+        val bool = presenter.checkPassword(oneTimeCheckEditText.text.toString())
         onResult(bool)
     }
 

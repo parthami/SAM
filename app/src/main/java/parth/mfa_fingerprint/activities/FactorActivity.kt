@@ -107,7 +107,7 @@ class FactorActivity : AppCompatActivity(), MainView {
 //    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode != Activity.RESULT_CANCELED || data == null) {
+        if (resultCode != Activity.RESULT_CANCELED || data != null) {
             if (requestCode == authentication_one_result && resultCode == Activity.RESULT_OK) {
                 val b = data!!.getBooleanExtra("result", false)
                 //  Set the button based on the result

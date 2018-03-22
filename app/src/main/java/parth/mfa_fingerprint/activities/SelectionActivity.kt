@@ -52,8 +52,8 @@ class SelectionActivity : AppCompatActivity() {
         AuthenticationNode.setEnabled(AuthenticationNode.FINGERPRINT, preferences.getBoolean("fingerprint_switch", true))
         AuthenticationNode.setEnabled(AuthenticationNode.ONETIME, preferences.getBoolean("one_time_switch", true))
         AuthenticationNode.setEnabled(AuthenticationNode.VOICE, preferences.getBoolean("voice_switch", true))
-        AuthenticationNode.setEnabled(AuthenticationNode.LOCATION, preferences.getBoolean("location_switch", true))
-
+        AuthenticationNode.setEnabled(AuthenticationNode.LOCATION, preferences.getBoolean("Location_switch", true))
+        AuthenticationNode.setEnabled(AuthenticationNode.BLANK, preferences.getBoolean("blank_switch", true))
         selection()
     }
 
