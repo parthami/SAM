@@ -1,6 +1,5 @@
 package parth.mfa_fingerprint.helpers
 
-import android.util.Log
 import java.util.*
 
 /**
@@ -52,8 +51,8 @@ class AliasMethod(var incoming: ArrayList<Double>) {
             else
                 large.add(g)
         }
-        Log.i("PTAG", probabilities.toString())
-        Log.i("PTAG", alias.toString())
+//        Log.i("PTAG", probabilities.toString())
+//        Log.i("PTAG", alias.toString())
 //        While Large is not empty:
 //        Remove the first element from Large; call it g.
 //        Set Prob[g]=1.0
