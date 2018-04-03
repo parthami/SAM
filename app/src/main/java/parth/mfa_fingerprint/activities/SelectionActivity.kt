@@ -11,9 +11,8 @@ import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_selection.*
 import parth.mfa_fingerprint.R
-import parth.mfa_fingerprint.R.id.authButton
-import parth.mfa_fingerprint.R.id.factorList
 import parth.mfa_fingerprint.helpers.AliasMethod
 import parth.mfa_fingerprint.types.AuthenticationNode
 import parth.mfa_fingerprint.types.Enviroment

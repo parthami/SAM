@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.transition.Slide
 import android.view.Gravity
 import android.view.View
+import kotlinx.android.synthetic.main.activity_fingerprint.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingerprintView

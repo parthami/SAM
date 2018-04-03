@@ -15,6 +15,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.View.VISIBLE
 import com.google.zxing.integration.android.IntentIntegrator
+import kotlinx.android.synthetic.main.activity_qr.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.QrInteractor
 import parth.mfa_fingerprint.interfaces.QrView

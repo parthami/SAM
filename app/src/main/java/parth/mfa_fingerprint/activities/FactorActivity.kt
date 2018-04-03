@@ -11,6 +11,7 @@ import android.transition.Slide
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import kotlinx.android.synthetic.main.activity_factors.*
 import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.MainView

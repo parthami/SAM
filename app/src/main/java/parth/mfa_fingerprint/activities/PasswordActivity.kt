@@ -14,6 +14,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_password.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.PasswordInteractor
 import parth.mfa_fingerprint.interfaces.PasswordView

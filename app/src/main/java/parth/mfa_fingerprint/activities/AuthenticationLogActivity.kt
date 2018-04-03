@@ -29,7 +29,6 @@ class AuthenticationLogActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
 
         logRecycler.setHasFixedSize(true)
-//        logRecycler.setEmptyView(emptyView)
         setLogAdapter()
         // Set decorations
         val decoration = SpacesItemDecoration(16)
@@ -40,10 +39,6 @@ class AuthenticationLogActivity : AppCompatActivity() {
 
         logRecycler.layoutManager = LinearLayoutManager(this)
 
-//        val input = doubleArrayOf(0.125,0.20,0.1,0.25,0.1,0.1,0.125)
-//        val alias = AliasMethod(input)
-//        val output = alias.generation()
-//        Log.i("PTAG", "$output")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

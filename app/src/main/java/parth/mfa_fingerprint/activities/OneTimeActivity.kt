@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import kotlinx.android.synthetic.main.activity_one_time.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.OneTimeInteractor
 import parth.mfa_fingerprint.interfaces.OneTimeView
@@ -35,7 +36,6 @@ class OneTimeActivity : AppCompatActivity(), OneTimeView {
 
         interactor = OneTimeInteractor()
         presenter = OneTimePresenter(this, interactor)
-
         // Generate OTP
         presenter.generatePassword(demoMode)
         // Email the OTP
