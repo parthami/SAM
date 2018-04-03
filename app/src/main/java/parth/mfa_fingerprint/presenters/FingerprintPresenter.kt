@@ -89,21 +89,11 @@ class FingerprintPresenter (private var fingerprintActivity: FingerprintActivity
 
         override fun onAuthenticationFailed() {
             Toast.makeText(context, "Authentication failed.", Toast.LENGTH_LONG).show()
-//            val log = AuthenticationNodeLog(node.label, false, Date().time)
-//            doAsync {
-//                db.authenticationNodeLogDAO().insertLog(log)
-//            }
             fingerprintActivity.onResult(false)
         }
 
         override fun onAuthenticationSucceeded(result: FingerprintManager.AuthenticationResult) {
-//            Toast.makeText(context, "Authentication succeeded.", Toast.LENGTH_LONG).show()
-//            val log = AuthenticationNodeLog(node.label, true, Date().time)
-//            doAsync {
-//                db.authenticationNodeLogDAO().insertLog(log)
-//            }
             fingerprintActivity.success()
-//            fingerprintActivity.onResult(true)
         }
     }
 

@@ -14,7 +14,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_password.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.PasswordInteractor
 import parth.mfa_fingerprint.interfaces.PasswordView
@@ -75,14 +74,14 @@ class PasswordActivity : AppCompatActivity(), PasswordView {
 
     }
 
-    private fun setupWindowAnimations() {
+    override fun setupWindowAnimations() {
         val slide = Slide()
         slide.duration = 100
         slide.slideEdge = Gravity.LEFT
         window.enterTransition = slide
     }
 
-    fun onResult(boolean: Boolean) {
+    override fun onResult(boolean: Boolean) {
         val intent = Intent()
         intent.putExtra("result", boolean)
         setResult(Activity.RESULT_OK, intent)

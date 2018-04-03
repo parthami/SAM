@@ -16,7 +16,7 @@ class OneTimePresenter(private val activity: OneTimeActivity, private val intera
 
     private var otp: Int = 0
 
-    fun emailPassword(context: Context) {
+    override fun emailPassword(context: Context) {
         val i = Intent(Intent.ACTION_SEND)
         i.type = "message/rfc822"
         i.putExtra(Intent.EXTRA_EMAIL, arrayOf("chandratreya.parth@gmail.com"))
@@ -25,22 +25,24 @@ class OneTimePresenter(private val activity: OneTimeActivity, private val intera
         try {
             startActivity(context,Intent.createChooser(i, "Send mail..."),null)
         } catch (ex: android.content.ActivityNotFoundException) {
-            activity.diplaySnackbar("There are no email clients installed.")
+            activity.displaySnackbar("There are no email clients installed.")
         }
     }
 
-    fun checkPassword(stringToCheck: String): Boolean {
-        val boolean = stringToCheck == otp.toString()
-        val snackbarString = if (boolean) {
+    override fun checkPassword(stringToCheck: String): Boolean {
+        return stringToCheck == otp.toString()
+    }
+
+    fun displayMessage(b: Boolean){
+        val snackbarString = if (b) {
             "OTP verified!"
         } else {
             "WRONG OTP!"
         }
-        activity.diplaySnackbar(snackbarString)
-        return boolean
+        activity.displaySnackbar(snackbarString)
     }
 
-    fun generatePassword(b: Boolean) {
+    override fun generatePassword(b: Boolean) {
         otp = if (b) {
             ThreadLocalRandom.current().nextInt(111111, 999999)
         } else {

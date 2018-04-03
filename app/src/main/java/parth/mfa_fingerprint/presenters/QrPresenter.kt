@@ -52,7 +52,7 @@ class QrPresenter (val view : QrView, val interactor : QrInteractor ) : QrPresen
         return interactor.compareMACs(identifier, encryptedMAC)
     }
 
-    fun generateKey (){
+    override fun generateKey (){
         interactor.generateKey()
     }
 }

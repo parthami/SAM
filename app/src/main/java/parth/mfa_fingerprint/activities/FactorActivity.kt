@@ -11,7 +11,6 @@ import android.transition.Slide
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import kotlinx.android.synthetic.main.activity_factors.*
 import org.jetbrains.anko.doAsync
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interfaces.MainView
@@ -66,7 +65,7 @@ class FactorActivity : AppCompatActivity(), MainView {
         authenticationLog = AuthenticationNodeLog(factorOne.label, factorTwo.label, factorThree.label, false, false, false, Date().time)
     }
 
-    fun setFactorOnClick(s: String, resultCode: Int) {
+    override fun setFactorOnClick(s: String, resultCode: Int) {
         when (s) {
             AuthenticationNode.FINGERPRINT.label -> {
                 return fingerprintClick(resultCode)
@@ -92,20 +91,6 @@ class FactorActivity : AppCompatActivity(), MainView {
         }
     }
 
-//    override fun auth1Click(view: View) {
-//        val a = FingerprintActivity::class.java
-//        val intent = Intent(this, a)
-//        val options = ActivityOptions.makeSceneTransitionAnimation(this, factorOneText, "factorOneTextTrans")
-//        startActivity(intent, options.toBundle())
-//    }
-
-//    fun auth3Click(view: View) {
-//        val intent = Intent(this, Class.forName(factorThree.className)::class.java)
-////        val options = ActivityOptions.makeSceneTransitionAnimation(this,  Pair<View, String>(button3, "factorThreeButtonTrans"), Pair<View, String>(factorThreeText, "factorThreeTitleTrans"))
-////        startActivity(intent, options.toBundle())
-//        startActivity(intent)
-//    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode != Activity.RESULT_CANCELED || data != null) {
             if (requestCode == authentication_one_result && resultCode == Activity.RESULT_OK) {
@@ -116,6 +101,7 @@ class FactorActivity : AppCompatActivity(), MainView {
                 factorOneText.typeface = Typeface.DEFAULT_BOLD
                 factorOneButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
                 authenticationLog.result = b
+                AuthenticationNode.changeProbability(factorOne, b)
             }
             if (requestCode == authentication_two_result && resultCode == Activity.RESULT_OK) {
                 val b = data!!.getBooleanExtra("result", false)
@@ -125,6 +111,7 @@ class FactorActivity : AppCompatActivity(), MainView {
                 factorTwoText.typeface = Typeface.DEFAULT_BOLD
                 factorTwoButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
                 authenticationLog.result2 = b
+                AuthenticationNode.changeProbability(factorTwo, b)
             }
             if (requestCode == authentication_three_result && resultCode == Activity.RESULT_OK) {
                 val b = data!!.getBooleanExtra("result", false)
@@ -134,6 +121,7 @@ class FactorActivity : AppCompatActivity(), MainView {
                 factorThreeText.typeface = Typeface.DEFAULT_BOLD
                 factorThreeButton.setText(if (b) R.string.authenticationSuccess else R.string.authenticationFailure)
                 authenticationLog.result3 = b
+                AuthenticationNode.changeProbability(factorThree, b)
             }
             // COUNTER
             factorCounter++
@@ -150,58 +138,59 @@ class FactorActivity : AppCompatActivity(), MainView {
         }
     }
 
-    private fun setupWindowAnimations() {
+    override fun setupWindowAnimations() {
         val slide = Slide()
         slide.duration = 100
         slide.slideEdge = Gravity.LEFT
         window.exitTransition = slide
     }
 
-    fun onClick(v: View) {
+    override fun onClick(v: View) {
         val intent = Intent(this, AuthenticationLogActivity::class.java)
         startActivity(intent)
     }
 
-    fun fingerprintClick(resultCode: Int) {
+    override fun fingerprintClick(resultCode: Int) {
         val intent = Intent(this, FingerprintActivity::class.java)
         startActivityForResult(intent, resultCode)
     }
 
-    private fun qrClick(resultCode: Int) {
+    override fun qrClick(resultCode: Int) {
         val intent = Intent(this, QrActivity::class.java)
         startActivityForResult(intent, resultCode)
     }
 
-    private fun passwordClick(resultCode: Int) {
+    override fun passwordClick(resultCode: Int) {
         val intent = Intent(this, PasswordActivity::class.java)
         startActivityForResult(intent, resultCode)
     }
 
-    private fun blankClick(resultCode: Int) {
+    override fun blankClick(resultCode: Int) {
         val intent = Intent(this, BlankActivity::class.java)
         startActivityForResult(intent, resultCode)
     }
 
-    private fun locationClick(resultCode: Int) {
+    override fun locationClick(resultCode: Int) {
         val intent = Intent(this, LocationActivity::class.java)
         startActivityForResult(intent, resultCode)
     }
 
-    private fun voiceClick(resultCode: Int) {
+    override fun voiceClick(resultCode: Int) {
         val intent = Intent(this, VoiceActivity::class.java)
         startActivityForResult(intent, resultCode)
     }
 
-    private fun oneTimeClick(resultCode: Int) {
+    override fun oneTimeClick(resultCode: Int) {
         val intent = Intent(this, OneTimeActivity::class.java)
         startActivityForResult(intent, resultCode)
     }
 
-    private fun finishedClick() {
+    override fun finishedClick() {
         val intent = Intent(this, AuthenticationLogActivity::class.java)
         doAsync {
             db.authenticationNodeLogDAO().insertLog(authenticationLog)
         }
         startActivity(intent)
+
     }
 }

@@ -12,4 +12,5 @@ interface QrPresenterI {
     fun generateQRCode(imageView: ImageView)
     fun scanQRCode(activity: QrActivity)
     fun decryptMAC(identifier: String, encryptedMAC: String): Boolean
+    fun generateKey ()
 }

@@ -11,8 +11,9 @@ import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_selection.*
 import parth.mfa_fingerprint.R
+import parth.mfa_fingerprint.R.id.authButton
+import parth.mfa_fingerprint.R.id.factorList
 import parth.mfa_fingerprint.helpers.AliasMethod
 import parth.mfa_fingerprint.types.AuthenticationNode
 import parth.mfa_fingerprint.types.Enviroment
@@ -109,7 +110,7 @@ class SelectionActivity : AppCompatActivity() {
         }
     }
 
-    fun addLabelsToList(list : Array<AuthenticationNode>, layout: LinearLayout, enabled : Boolean) {
+    private fun addLabelsToList(list : Array<AuthenticationNode>, layout: LinearLayout, enabled : Boolean) {
         if(enabled) {
             list.filter { it.enabled }.map {
                 layout.addView(getLabelTextView(it.label, ContextCompat.getColor(this, R.color.secondaryColor)))
@@ -122,7 +123,7 @@ class SelectionActivity : AppCompatActivity() {
         }
     }
 
-    fun sendToList(v: View) {
+     fun sendToList(v: View) {
         val intent = Intent(this, FactorActivity::class.java)
         val enabledFactors: ArrayList<AuthenticationNode> = ArrayList(0)
         val probabilities: ArrayList<Double> = ArrayList(0)
@@ -137,7 +138,7 @@ class SelectionActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun getThreeFactors(factors: ArrayList<AuthenticationNode>, probabilities: ArrayList<Double>): ArrayList<String> {
+    private fun getThreeFactors(factors: ArrayList<AuthenticationNode>, probabilities: ArrayList<Double>): ArrayList<String> {
         val chosenFactors: ArrayList<String> = ArrayList(3)
         // Factor 1
         var alias = AliasMethod(probabilities)
@@ -156,14 +157,6 @@ class SelectionActivity : AppCompatActivity() {
         val f3 = alias.generation()
         chosenFactors.add(factors[f3].label.toUpperCase())
         return chosenFactors
-    }
-
-    private fun factorNamesAsString(array: Array<AuthenticationNode>): ArrayList<String> {
-        val g: ArrayList<String> = ArrayList(0)
-        array.forEach {
-            g.add(it.toString())
-        }
-        return g
     }
 
     fun inLimitRange(value: Double, lowerLimit: Double, higherLimit: Double): Boolean {

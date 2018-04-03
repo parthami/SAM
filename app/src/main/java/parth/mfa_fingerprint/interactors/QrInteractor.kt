@@ -16,9 +16,8 @@ import javax.crypto.Mac
 class QrInteractor : QrInteractorI {
 
     val hmacKeyAlias : String = "key1"
-//    private lateinit var  key: SecretKey
 
-    fun generateKey() {
+    override fun generateKey() {
         // Generate HMAC
         val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_HMAC_SHA256, "AndroidKeyStore")
         keyGenerator.init(KeyGenParameterSpec.Builder(hmacKeyAlias, KeyProperties.PURPOSE_SIGN).build())

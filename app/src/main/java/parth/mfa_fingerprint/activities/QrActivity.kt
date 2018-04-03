@@ -15,7 +15,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.View.VISIBLE
 import com.google.zxing.integration.android.IntentIntegrator
-import kotlinx.android.synthetic.main.activity_qr.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.QrInteractor
 import parth.mfa_fingerprint.interfaces.QrView
@@ -82,7 +81,7 @@ class QrActivity : AppCompatActivity(), QrView {
         onResult(auth)
     }
 
-    fun generateKey(v: View) {
+    override fun generateKey(v: View) {
         presenter.generateKey()
     }
 
@@ -106,14 +105,14 @@ class QrActivity : AppCompatActivity(), QrView {
         }
     }
 
-    private fun setupWindowAnimations() {
+    override fun setupWindowAnimations() {
         val slide = Slide()
         slide.duration = 100
         slide.slideEdge = Gravity.LEFT
         window.enterTransition = slide
     }
 
-    private fun onResult(boolean: Boolean) {
+    override fun onResult(boolean: Boolean) {
         val intent = Intent()
         intent.putExtra("result", boolean)
         setResult(Activity.RESULT_OK, intent)

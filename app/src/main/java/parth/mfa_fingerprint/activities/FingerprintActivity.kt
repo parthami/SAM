@@ -7,12 +7,10 @@ import android.support.v7.app.AppCompatActivity
 import android.transition.Slide
 import android.view.Gravity
 import android.view.View
-import kotlinx.android.synthetic.main.activity_fingerprint.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.FingerprintInteractor
 import parth.mfa_fingerprint.interfaces.FingerprintView
 import parth.mfa_fingerprint.presenters.FingerprintPresenter
-
 
 
 class FingerprintActivity : AppCompatActivity(), FingerprintView {
@@ -36,7 +34,7 @@ class FingerprintActivity : AppCompatActivity(), FingerprintView {
         presenter.startListening(this)
     }
 
-    private fun setupWindowAnimations() {
+    override fun setupWindowAnimations() {
         val slide = Slide()
         slide.duration = 100
         slide.slideEdge = Gravity.LEFT

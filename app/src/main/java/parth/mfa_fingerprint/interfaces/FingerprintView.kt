@@ -7,4 +7,5 @@ interface FingerprintView {
 
     fun onResult(boolean: Boolean)
     fun success()
+    fun setupWindowAnimations()
 }

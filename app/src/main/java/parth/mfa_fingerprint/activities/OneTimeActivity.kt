@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.preference.PreferenceManager
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import kotlinx.android.synthetic.main.activity_one_time.*
 import parth.mfa_fingerprint.R
 import parth.mfa_fingerprint.interactors.OneTimeInteractor
 import parth.mfa_fingerprint.interfaces.OneTimeView
@@ -43,17 +42,18 @@ class OneTimeActivity : AppCompatActivity(), OneTimeView {
         presenter.emailPassword(this)
     }
 
-    fun check(v: View) {
+    override fun check(v: View) {
         inputManager.hideSoftInputFromWindow(if (null == currentFocus) null else currentFocus!!.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         val bool = presenter.checkPassword(oneTimeCheckEditText.text.toString())
+        presenter.displayMessage(bool)
         onResult(bool)
     }
 
-    fun diplaySnackbar(display: String) {
+    override fun displaySnackbar(display: String) {
         Snackbar.make(constraintLayout2, display, Snackbar.LENGTH_SHORT).show()
     }
 
-    fun onResult(boolean: Boolean) {
+    override fun onResult(boolean: Boolean) {
         val intent = Intent()
         intent.putExtra("result", boolean)
         setResult(Activity.RESULT_OK, intent)

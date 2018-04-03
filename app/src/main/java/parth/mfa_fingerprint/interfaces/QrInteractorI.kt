@@ -6,4 +6,5 @@ package parth.mfa_fingerprint.interfaces
 interface QrInteractorI {
     fun encryptMAC(string : String) : ByteArray
     fun compareMACs(s1: String, s2: String): Boolean
+    fun generateKey ()
 }
